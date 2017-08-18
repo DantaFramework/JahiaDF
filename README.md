@@ -1,6 +1,6 @@
-# LayerX - Jahia Digital Factory Project
+# LayerX - JahiaDF Project
 
-LayerX - Jahia Digital Factory Project is the maven project contained source codes specifically for Jahia.
+LayerX - JahiaDF (Digital Factory) Project is the maven project contained source codes specifically for Jahia.
 
 ## Documentation
 

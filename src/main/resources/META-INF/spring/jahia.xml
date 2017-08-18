@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+    <reference id="contextProcessorEngineService" interface="layerx.api.ContextProcessorEngine" />
+    <reference id="contentModelFactoryServiceServiceReference" interface="layerx.jahia.services.ContentModelFactoryService" />
+    <reference id="configurationProviderReference" interface="layerx.api.configuration.ConfigurationProvider" />
+
+    <bean id="contentmodel" class="layerx.jahia.servlets.ComponentContentModelToJSONActionServlet">
+        <property name="name" value="contentmodel.component" />
+        <property name="contextProcessorEngine" ref="contextProcessorEngineService" />
+        <property name="contentModelFactoryService" ref="contentModelFactoryServiceServiceReference" />
+        <property name="configurationProvider" ref="configurationProviderReference" />
+    </bean>
+
+    <bean id="pagecontentmodel" class="layerx.jahia.servlets.PageContentModelToJSONServlet">
+        <property name="name" value="contentmodel.page" />
+        <property name="contextProcessorEngine" ref="contextProcessorEngineService" />
+        <property name="contentModelFactoryService" ref="contentModelFactoryServiceServiceReference" />
+        <property name="configurationProvider" ref="configurationProviderReference" />
+    </bean>
+
+</blueprint>

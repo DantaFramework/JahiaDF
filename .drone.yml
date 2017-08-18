@@ -1,0 +1,10 @@
+pipeline:
+  # Build project and push to Nexus
+  build:
+    image: registry.xumak.gt:5000/xumak/maven:3.3.9-jdk8
+    commands:
+      - mvn clean install -Pdeploy-nexus
+    volumes:
+      - ${USER_PATH}/.m2:/root/.m2/
+    when:
+      branch: develop  

@@ -1,4 +1,4 @@
-package com.xumak.layerx.jahia.rules
+package com.xumak.danta.jahia.rules
 
 // list any import classes here.
 import org.jahia.services.content.rules.*

@@ -1,16 +1,16 @@
-# LayerX - JahiaDF Project
+# Danta - JahiaDF Project
 
-LayerX - JahiaDF (Digital Factory) Project is the maven project contained source codes specifically for Jahia.
+Danta - JahiaDF (Digital Factory) Project is the maven project contained source codes specifically for Jahia.
 
 ## Documentation
 
- * Read our [official documentation](http://layerx.technologies.io/docs/) for more information.
+ * Read our [official documentation](http://danta.technologies.io/docs/) for more information.
  
 ## Prerequisites
 
- * [LayerX - Parent Project](https://github.com/layerx/Parent)
- * [LayerX - API Project](https://github.com/layerx/API)
- * [LayerX - Core Project](https://github.com/layerx/Core)
+ * [Danta - Parent Project](https://github.com/DataFramework/Parent)
+ * [Danta - API Project](https://github.com/DataFramework/API)
+ * [Danta - Core Project](https://github.com/DataFramework/Core)
  * Java 8
  * Jahia 7.2 or later (for integration with Jahia)
 

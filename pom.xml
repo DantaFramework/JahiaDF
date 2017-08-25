@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-- LayerX Jahia Bundle
+- Danta Jahia Bundle
 -
 - Copyright (C) 2017 Tikal Technologies, Inc. All rights reserved.
 -
@@ -27,22 +27,22 @@
         <version>7.2.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>LayerX</groupId>
-    <artifactId>Jahia</artifactId>
-    <name>LayerX JahiaDF</name>
+    <groupId>Danta</groupId>
+    <artifactId>JahiaDF</artifactId>
+    <name>Danta JahiaDF</name>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <description>This is the custom module (LayerX - JahiaDF) for running on a Digital Experience Manager server.</description>
+    <description>This is the custom module (Danta - JahiaDF) for running on a Digital Experience Manager server.</description>
 
     <scm>
-        <connection>scm:git:git@gitlab.xumak.gt:layerx/JahiaDF.git</connection>
-        <developerConnection>scm:git:git@gitlab.xumak.gt:layerx/JahiaDF.git</developerConnection>
+        <connection>scm:git:git@github.com:danta/JahiaDF.git</connection>
+        <developerConnection>scm:git:git@github.com:danta/JahiaDF.git</developerConnection>
     </scm>
     <properties>
         <!-- nexus properties -->
-        <nexus.dev.url>http://54.236.230.120/nexus/content/repositories/layerx-development</nexus.dev.url>
-        <nexus.staging.url>http://54.236.230.120/nexus/content/repositories/layerx-staging</nexus.staging.url>
+        <nexus.dev.url>http://54.236.230.120/nexus/content/repositories/danta-development</nexus.dev.url>
+        <nexus.staging.url>http://54.236.230.120/nexus/content/repositories/danta-staging</nexus.staging.url>
     </properties>
 
     <repositories>
@@ -114,13 +114,13 @@
                 <configuration>
                     <instructions>
                         <Jahia-Module-Type>system</Jahia-Module-Type>
-                        <Export-Package>layerx.jahia.*, com.github.jknack.handlebars.*,com.github.jknack.* </Export-Package>
-                        <Import-Package>layerx.core.util, layerx.core.execution, javax.servlet.http,net.minidev.json;version=1.2.0, org.slf4j; version="[1.6, 2)"; resolution:=optional,
+                        <Export-Package>danta.jahia.*, com.github.jknack.handlebars.*,com.github.jknack.* </Export-Package>
+                        <Import-Package>danta.core.util, danta.core.execution, javax.servlet.http,net.minidev.json;version=1.2.0, org.slf4j; version="[1.6, 2)"; resolution:=optional,
                             *,${jahia.plugin.projectPackageImport}
                         </Import-Package>
                         <Embed-Dependency>antlr4-runtime,
                             jsoup,commons-lang3,guava,handlebars</Embed-Dependency>
-                        <Bundle-Activator>layerx.jahia.LayerXJahiaActivator</Bundle-Activator>
+                        <Bundle-Activator>danta.jahia.DantaJahiaActivator</Bundle-Activator>
                     </instructions>
                 </configuration>
             </plugin>
@@ -145,7 +145,7 @@
                                     <goal>deploy-file</goal>
                                 </goals>
                                 <configuration>
-                                    <repositoryId>layerx-development</repositoryId>
+                                    <repositoryId>danta-development</repositoryId>
                                     <packaging>jar</packaging>
                                     <generatePom>true</generatePom>
                                     <url>${nexus.dev.url}</url>
@@ -176,7 +176,7 @@
                                     <goal>deploy-file</goal>
                                 </goals>
                                 <configuration>
-                                    <repositoryId>layerx-staging</repositoryId>
+                                    <repositoryId>danta-staging</repositoryId>
                                     <packaging>jar</packaging>
                                     <generatePom>true</generatePom>
                                     <url>${nexus.staging.url}</url>
@@ -217,10 +217,10 @@
                                     <optimize>true</optimize>
                                     <osgiCompatibility>true</osgiCompatibility>
                                     <includes>
-                                        <include>layerx/**</include>
+                                        <include>danta/**</include>
                                     </includes>
                                     <excludes>
-                                        <exclude>layerx/jahia/contextprocessors/images/**</exclude>
+                                        <exclude>danta/jahia/contextprocessors/images/**</exclude>
                                     </excludes>
                                 </configuration>
                             </execution>
@@ -240,12 +240,12 @@
         </dependency>
 
         <dependency>
-            <groupId>LayerX</groupId>
+            <groupId>Danta</groupId>
             <artifactId>API</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>LayerX</groupId>
+            <groupId>Danta</groupId>
             <artifactId>Core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
@@ -381,11 +381,11 @@
     </dependencies>
     <distributionManagement>
         <snapshotRepository>
-            <id>layerx-development</id>
+            <id>danta-development</id>
             <url>${nexus.dev.url}</url>
         </snapshotRepository>
         <repository>
-            <id>layerx-staging</id>
+            <id>danta-staging</id>
             <url>${nexus.staging.url}</url>
         </repository>
     </distributionManagement>

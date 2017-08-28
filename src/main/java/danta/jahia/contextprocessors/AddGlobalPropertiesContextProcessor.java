@@ -87,22 +87,22 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
                 JCRSessionWrapper jcrSession = resource.getNode().getSession();
 
                 // TODO Move this to a configuration PATH so every site can decide where to find it
-                String layerXConfigurationNode = sitePath + LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH;
-                if (jcrSession.nodeExists(layerXConfigurationNode)) {
-                    JCRNodeWrapper layerXNode = jcrSession.getNode(layerXConfigurationNode);
-                    if (layerXNode != null && layerXNode.hasNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME)) {
+                String dantaConfigurationNode = sitePath + LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH;
+                if (jcrSession.nodeExists(dantaConfigurationNode)) {
+                    JCRNodeWrapper dantaNode = jcrSession.getNode(dantaConfigurationNode);
+                    if (dantaNode != null && dantaNode.hasNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME)) {
 
-                        JCRNodeWrapper globalPropertiesNode = layerXNode.getNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME);
+                        JCRNodeWrapper globalPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME);
                         // TODO: Remove old version
                         //processNode(globalPropertiesNode, null, contentModel);
                         Map globalContext = processNode(globalPropertiesNode);
                         contentModel.set(GLOBAL_PROPERTIES_KEY , globalContext);
 
                     } else {
-                        LOG.error("Danta Configuration Global Not found: " + layerXConfigurationNode + " For resource: " + resource.getPath());
+                        LOG.error("Danta Configuration Global Not found: " + dantaConfigurationNode + " For resource: " + resource.getPath());
                     }
                 }else{
-                    LOG.error("Danta Configuration Global Not found: " + layerXConfigurationNode + " For resource: " + resource.getPath());
+                    LOG.error("Danta Configuration Global Not found: " + dantaConfigurationNode + " For resource: " + resource.getPath());
                 }
             }
         } catch (Exception e) {

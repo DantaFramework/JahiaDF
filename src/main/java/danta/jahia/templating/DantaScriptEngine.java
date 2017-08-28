@@ -72,10 +72,10 @@ public class DantaScriptEngine extends AbstractScriptEngine {
 
     private final ScriptEngineFactory scriptEngineFactory;
 
-    public DantaScriptEngine(DantaScriptEngineFactory layerXScriptEngineFactory, ContextProcessorEngine contextProcessorEngine, ConfigurationProvider configurationProvider,
+    public DantaScriptEngine(DantaScriptEngineFactory dantaScriptEngineFactory, ContextProcessorEngine contextProcessorEngine, ConfigurationProvider configurationProvider,
                               DOMProcessorEngine domProcessorEngine, HelperFunctionBind helperFunctionBind) {
         super();
-        this.scriptEngineFactory = layerXScriptEngineFactory;
+        this.scriptEngineFactory = dantaScriptEngineFactory;
         this.configurationProvider = configurationProvider;
         this.contextProcessorEngine = contextProcessorEngine;
         this.domProcessorEngine = domProcessorEngine;

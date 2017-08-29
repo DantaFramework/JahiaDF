@@ -118,7 +118,8 @@
                         <Import-Package>danta.core.util, danta.core.execution, javax.servlet.http,net.minidev.json;version=1.2.0, org.slf4j; version="[1.6, 2)"; resolution:=optional,
                             *,${jahia.plugin.projectPackageImport}
                         </Import-Package>
-                        <Embed-Dependency>antlr4-runtime,
+
+                        <Embed-Dependency>antlr4-runtime,org.mozilla.javascript,
                             jsoup,commons-lang3,guava,handlebars</Embed-Dependency>
                         <Bundle-Activator>danta.jahia.DantaJahiaActivator</Bundle-Activator>
                     </instructions>
@@ -377,6 +378,13 @@
             <version>1.8.2</version>
         </dependency>
         <!-- /OSGi -->
+
+        <!-- Javascript -->
+        <dependency>
+            <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
+            <artifactId>org.mozilla.javascript</artifactId>
+            <version>[1.6,2)</version>
+        </dependency>
 
     </dependencies>
     <distributionManagement>

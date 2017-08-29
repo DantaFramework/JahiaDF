@@ -1,5 +1,7 @@
 # Danta - JahiaDF Project
 
+Danta is the agnostic multi-platform templating engine. enables developers and IT teams to use technologies they already know, expediting the creation and leveraging of reusable technical assets.
+
 Danta - JahiaDF (Digital Factory) Project is the maven project contained source codes specifically for Jahia.
 
 ## Documentation

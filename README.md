@@ -44,3 +44,8 @@ Make sure you modify the jahia.deploy.targetServerDirectory to point to the /tom
 Then you should be able to deploy your module using the following Maven command:
 
     mvn clean install jahia:deploy -P jahia-local
+    
+## Credit
+
+Special thanks to Jose Alvarez, who named Danta for the powerful ancient Mayan pyramid, La Danta. 
+La Danta is the largest pyramid in El Mirador—the biggest Mayan city found in Petén, Guatemala.

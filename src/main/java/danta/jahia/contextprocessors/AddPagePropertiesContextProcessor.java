@@ -126,12 +126,12 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                         Session jcrSession = resource.getNode().getSession();
 
                         // TODO Move this to a configuration PATH so every site can decide where to find it
-                        String layerXConfigurationNode = sitePath + LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH;
-                        if (jcrSession.nodeExists(layerXConfigurationNode)) {
-                            Node layerXNode = jcrSession.getNode(layerXConfigurationNode);
-                            if (layerXNode != null && layerXNode.hasNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME)) {
+                        String dantaConfigurationNode = sitePath + LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH;
+                        if (jcrSession.nodeExists(dantaConfigurationNode)) {
+                            Node dantaNode = jcrSession.getNode(dantaConfigurationNode);
+                            if (dantaNode != null && dantaNode.hasNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME)) {
 
-                                Node pagesPropertiesNode = layerXNode.getNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME);
+                                Node pagesPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME);
                                 Node pageProperties = this.getPagePropertiesNode(pagesPropertiesNode, mainNode.getPath() );
                                 if (pageProperties != null){
                                     Map<String, Object> propsMapPage = propsToMap(pageProperties);
@@ -140,10 +140,10 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                                     LOG.error("Page Properties node not found For Path: " + mainNode.getPath() );
                                 }
                             } else {
-                                LOG.error("Danta Configuration PageStructure Not found: " + layerXConfigurationNode + " For resource: " + mainResource.getPath());
+                                LOG.error("Danta Configuration PageStructure Not found: " + dantaConfigurationNode + " For resource: " + mainResource.getPath());
                             }
                         }else{
-                            LOG.error("Danta Configuration Structure Not found: " + layerXConfigurationNode + " For resource: " + mainResource.getPath());
+                            LOG.error("Danta Configuration Structure Not found: " + dantaConfigurationNode + " For resource: " + mainResource.getPath());
                         }
 
                         // Load Page Properties From Danta Functionality END ******************************************

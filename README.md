@@ -10,9 +10,9 @@ Danta - JahiaDF (Digital Factory) Project is the maven project contained source 
  
 ## Prerequisites
 
- * [Danta - Parent Project](https://github.com/DataFramework/Parent)
- * [Danta - API Project](https://github.com/DataFramework/API)
- * [Danta - Core Project](https://github.com/DataFramework/Core)
+ * [Danta - Parent Project](https://github.com/DantaFramework/Parent)
+ * [Danta - API Project](https://github.com/DantaFramework/API)
+ * [Danta - Core Project](https://github.com/DantaFramework/Core)
  * Java 8
  * Jahia 7.2 or later (for integration with Jahia)
 

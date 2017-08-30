@@ -94,11 +94,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>com.licel</groupId>
-                    <artifactId>stringer-maven-plugin</artifactId>
-                    <version>2.5.19</version>
-                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -192,54 +187,14 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>stringer</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.licel</groupId>
-                        <artifactId>stringer-maven-plugin</artifactId>
-                        <version>2.5.19</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>stringer</goal>
-                                </goals>
-                                <configuration>
-                                    <verbose>true</verbose>
-                                    <checkCaller>true</checkCaller>
-                                    <integrityProtection>true</integrityProtection>
-                                    <checkJar>false</checkJar>
-                                    <resourceEncryption>true</resourceEncryption>
-                                    <optimize>true</optimize>
-                                    <osgiCompatibility>true</osgiCompatibility>
-                                    <includes>
-                                        <include>danta/**</include>
-                                    </includes>
-                                    <excludes>
-                                        <exclude>danta/jahia/contextprocessors/images/**</exclude>
-                                    </excludes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
     <dependencies>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>Danta</groupId>
             <artifactId>API</artifactId>
@@ -250,7 +205,6 @@
             <artifactId>Core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
         <!-- HANDLEBARS BEGIN -->
         <dependency>
             <groupId>com.github.jknack</groupId>
@@ -269,9 +223,6 @@
             <version>4.5.3</version>
         </dependency>
         <!-- HANDLEBARS BEGIN -->
-
-
-
         <!-- MISC BEGIN -->
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -279,22 +230,18 @@
             <version>1.8.1</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
             <version>2.3</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>net.sf.juffrou</groupId>
             <artifactId>juffrou-reflect</artifactId>
             <version>2.1.5</version>
         </dependency>
-
         <!-- MISC END -->
-
         <!-- Apache Commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -302,7 +249,6 @@
             <version>3.0.1</version>
         </dependency>
         <!-- Apache Commons END -->
-
         <!-- Collections BEGIN -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -310,7 +256,6 @@
             <version>15.0</version>
         </dependency>
         <!-- Collections END -->
-
         <!-- FELIX -->
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -324,7 +269,6 @@
             <version>4.3.1</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- OSGi -->
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -378,14 +322,12 @@
             <version>1.8.2</version>
         </dependency>
         <!-- /OSGi -->
-
         <!-- Javascript -->
         <dependency>
             <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
             <artifactId>org.mozilla.javascript</artifactId>
             <version>[1.6,2)</version>
         </dependency>
-
     </dependencies>
     <distributionManagement>
         <snapshotRepository>

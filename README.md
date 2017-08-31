@@ -4,10 +4,6 @@ Danta is the agnostic multi-platform templating engine. enables developers and I
 
 Danta - JahiaDF (Digital Factory) Project is the maven project contained source codes specifically for Jahia.
 
-## Documentation
-
- * Read our [official documentation](https://danta.tikaltechnologies.io/docs/aem/index.html) for more information.
- 
 ## Prerequisites
 
  * [Danta - Parent Project](https://github.com/DantaFramework/Parent)
@@ -15,6 +11,22 @@ Danta - JahiaDF (Digital Factory) Project is the maven project contained source 
  * [Danta - Core Project](https://github.com/DantaFramework/Core)
  * Java 8
  * Jahia 7.2 or later (for integration with Jahia)
+
+## Documentation
+
+### Jahia
+
+  * Clone the following repositories into the same folder (i.e. C:\workspace\danta or /User/{username}/workspace/danta) 
+    then run the maven build command (refer to **Compile** section of README.md, for each repository) in the following order
+    * [JahiaDF Demo](https://github.com/DantaFramework/JahiaDFDemo)
+    * [Parent](https://github.com/DantaFramework/Parent)
+    * [API](https://github.com/DantaFramework/API)
+    * [Core](https://github.com/DantaFramework/Core)
+    * [JahiaDF](https://github.com/DantaFramework/JahiaDF)
+
+### Official documentation
+
+ * Read our [official documentation](http://danta.tikaltechnologies.io/docs) for more information.
 
 ## License
 

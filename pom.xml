@@ -58,8 +58,13 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-    </repositories>
 
+        <repository>
+            <id>danta-nexus</id>
+            <name>Danta Repository</name>
+            <url>http://repo.tikaltechnologies.io/repository/danta-group/</url>
+        </repository>
+    </repositories>
     <build>
         <pluginManagement>
             <plugins>
@@ -331,12 +336,12 @@
     </dependencies>
     <distributionManagement>
         <snapshotRepository>
-            <id>danta-development</id>
-            <url>${nexus.dev.url}</url>
+            <id>danta-snapshots</id>
+            <url>http://repo.tikaltechnologies.io/repository/danta-snapshots/</url>
         </snapshotRepository>
         <repository>
-            <id>danta-staging</id>
-            <url>${nexus.staging.url}</url>
+            <id>danta-releases</id>
+            <url>http://repo.tikaltechnologies.io/repository/danta-snapshots/</url>
         </repository>
     </distributionManagement>
 </project>

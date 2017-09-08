@@ -30,8 +30,6 @@ import danta.api.configuration.Configuration;
 import danta.api.configuration.ConfigurationProvider;
 import danta.api.configuration.Mode;
 import danta.core.execution.ExecutionContextImpl;
-import danta.core.util.ContextProcessorPriorityComparator;
-import danta.core.util.DOMProcessorPriorityComparator;
 import org.apache.felix.scr.annotations.*;
 import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
@@ -66,7 +64,7 @@ import static danta.jahia.Constants.*;
  * @version     1.0.0
  * @since       2016-08-11
  */
-public class TemplatingSupportFilter extends AbstractFilter{
+public class TemplatingSupportFilter extends AbstractFilter {
 
     private static Logger LOG = LoggerFactory.getLogger(TemplatingSupportFilter.class);
     private static final String LOG_PRE = "|LAYER-X->TF|-> ";
@@ -74,9 +72,6 @@ public class TemplatingSupportFilter extends AbstractFilter{
     public static final String TEMPLATE_CONTENT_MODEL_ATTR_NAME = "template__contentmodel";
     public static final String IGNORE_PATTERN_LIST_PROPERTY_NAME = "ignorePatterns";
     public static final int MAX_CACHE_SIZE = 20;
-
-    static final ContextProcessorPriorityComparator PRIORITY_ORDER = new ContextProcessorPriorityComparator();
-    static final DOMProcessorPriorityComparator DOM_PROCESSOR_PRIORITY_COMPARATOR = new DOMProcessorPriorityComparator();
 
 
     @Override

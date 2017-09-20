@@ -22,7 +22,6 @@ package danta.jahia.contextprocessors.lists;
 import com.google.common.collect.Sets;
 import danta.api.ContentModel;
 import danta.core.contextprocessors.AbstractCheckComponentCategoryContextProcessor;
-import danta.core.util.NumberUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 
@@ -44,7 +43,7 @@ public abstract class AbstractItemListContextProcessor<C extends ContentModel>
         extends AbstractCheckComponentCategoryContextProcessor<C>
         implements ListContextProcessor<C> {
 
-    protected static final int PRIORITY = NumberUtils.nextPrime(HIGHER_PRIORITY - 20);
+    protected static final int PRIORITY = HIGHER_PRIORITY - 19;
 
     @Override
     public Set<String> anyOf() {

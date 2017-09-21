@@ -30,7 +30,6 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.render.*;
-import org.jahia.services.render.scripting.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +90,14 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                             if (!StringUtils.startsWithAny(propertyName, RESERVED_SYSTEM_NAME_PREFIXES)) {
                                 pageContent.put(propertyName, propsMap.get(propertyName));
                             }
+                        }
+
+                        // Add jcr:description property
+                        String jcrDescription = mainNode.getPropertyAsString(JCR_DESCRIPTION);
+                        if(jcrDescription == null) {
+                            pageContent.put(DESCRIPTION, "");
+                        } else {
+                            pageContent.put(DESCRIPTION, jcrDescription);
                         }
 
                         //pageContent.put(PATH, mainResource.getPath());

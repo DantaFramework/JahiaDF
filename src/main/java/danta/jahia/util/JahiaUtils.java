@@ -62,7 +62,7 @@ public class JahiaUtils {
         if (resource != null && resource.getNode() != null){
             String path = getNodeTypePathInsideBundle(resource);
             Bundle bundle = getBundle(resource);
-            response = hasXKConfigNode(bundle, path);
+            response = pathExists(bundle, path);
         }
         return response;
     }
@@ -78,7 +78,7 @@ public class JahiaUtils {
         if (extendedNodeType != null ){
             String path = getNodeTypePathInsideBundle(extendedNodeType);
             Bundle bundle = getBundle(extendedNodeType);
-            response = hasXKConfigNode(bundle, path);
+            response = pathExists(bundle, path);
         }
         return response;
     }
@@ -95,19 +95,19 @@ public class JahiaUtils {
         if (view != null ){
             String path = getXKConfigPathFromScriptView(view);
             Bundle bundle = getBundle(view);
-            response = hasXKConfigNode(bundle, path);
+            response = pathExists(bundle, path);
         }
         return response;
     }
 
     /**
-     * Check if it has configuration
+     * Check if a path exists
      *
      * @param bundle The Bundle to fetch resource
-     * @param path THe path to check for xk config node
+     * @param path The path to check
      * @return true or false
      */
-    private static boolean hasXKConfigNode(Bundle bundle, String path){
+    private static boolean pathExists(Bundle bundle, String path){
         boolean response = false;
         if (bundle != null && path != null){
             URL url = bundle.getResource(path);

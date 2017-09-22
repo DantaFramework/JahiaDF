@@ -94,11 +94,9 @@ public class PropertyUtils {
                     for (int i=0;i<values.length; i++){
                         String referenceUUID = values[i].getString();
                         try {
-                            distilledValues.add(ResourceUtils.getResourceNodePath(
-                                    property.getSession(), referenceUUID));
-                        } catch (ItemNotFoundException e ) {
-                            LOG.error("LayerX Exception: Reference to invalid item (e.g., unpublished content): " +
-                                    e.getMessage(),e);
+                            distilledValues.add(ResourceUtils.getResourceNodePath(property.getSession(), referenceUUID));
+                        } catch (ItemNotFoundException e) {
+                            LOG.error("Reference to invalid item (e.g., unpublished content): " + e.getMessage(), e);
                         }
                     }
                     content = distilledValues;

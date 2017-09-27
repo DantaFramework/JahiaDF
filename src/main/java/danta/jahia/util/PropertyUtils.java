@@ -30,6 +30,7 @@ import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.PropertyType;
 import javax.jcr.Value;
+import javax.jcr.ItemNotFoundException;
 import java.util.*;
 
 import org.jahia.services.render.Resource;
@@ -92,7 +93,11 @@ public class PropertyUtils {
                     List<String> distilledValues = new ArrayList<>();
                     for (int i=0;i<values.length; i++){
                         String referenceUUID = values[i].getString();
-                        distilledValues.add(ResourceUtils.getResourceNodePath(property.getSession(), referenceUUID));
+                        try {
+                            distilledValues.add(ResourceUtils.getResourceNodePath(property.getSession(), referenceUUID));
+                        } catch (ItemNotFoundException e) {
+                            LOG.error("Reference to invalid item (e.g., unpublished content): " + e.getMessage(), e);
+                        }
                     }
                     content = distilledValues;
                 }else {

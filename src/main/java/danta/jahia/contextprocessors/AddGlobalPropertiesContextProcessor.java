@@ -21,34 +21,25 @@ package danta.jahia.contextprocessors;
 
 import com.google.common.collect.Sets;
 import danta.api.ExecutionContext;
-import danta.api.configuration.Configuration;
 import danta.api.exceptions.ProcessException;
 import danta.core.contextprocessors.AbstractCheckComponentCategoryContextProcessor;
 import danta.jahia.templating.TemplateContentModel;
 import danta.jahia.util.PropertyUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
-import org.jahia.services.content.JCRNodeIteratorWrapper;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRSessionWrapper;
-import org.jahia.services.notification.templates.Link;
 import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
-import org.jahia.services.render.SiteInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.LinkedHashMap;
 
 import static danta.Constants.*;
-import static danta.core.util.ObjectUtils.wrap;
 import static danta.jahia.Constants.*;
 
 /**
@@ -93,8 +84,6 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
                     if (dantaNode != null && dantaNode.hasNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME)) {
 
                         JCRNodeWrapper globalPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME);
-                        // TODO: Remove old version
-                        //processNode(globalPropertiesNode, null, contentModel);
                         Map globalContext = processNode(globalPropertiesNode);
                         contentModel.set(GLOBAL_PROPERTIES_KEY , globalContext);
 
@@ -113,21 +102,25 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
     protected Map processNode(JCRNodeWrapper node)throws Exception{
         if (node.hasNodes()){
             // Start a new level
-            LinkedHashMap globalContext = new LinkedHashMap();
+            LinkedHashMap level = new LinkedHashMap();
 
             Iterator<JCRNodeWrapper> iterator = node.getNodes().iterator();
             while( iterator.hasNext()){
                 JCRNodeWrapper childNode = iterator.next();
-                globalContext.put(childNode.getName(), this.processNode(childNode));
+                level.put(childNode.getName(), this.processNode(childNode));
             }
 
-            return globalContext;
+            // Add current node properties (if any)
+            Map<String, Object> currentProperties = PropertyUtils.propsToMap(node);
+            level.putAll(currentProperties);
+
+            return level;
 
         } else {
             // Leaf node reached
-            Map<String, Object> globalProperties = PropertyUtils.propsToMap(node);
+            Map<String, Object> properties = PropertyUtils.propsToMap(node);
 
-            return globalProperties;
+            return properties;
         }
     }
 }

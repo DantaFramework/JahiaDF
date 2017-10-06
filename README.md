@@ -14,7 +14,7 @@ Danta - JahiaDF (Digital Factory) Project is the maven project contained source 
 
 ## Documentation
 
-### Jahia
+### Installation
 
   * Clone the following repositories into the same folder (i.e. C:\workspace\danta or /User/{username}/workspace/danta) 
     then run the maven build command (refer to **Compile** section of README.md, for each repository) in the following order:

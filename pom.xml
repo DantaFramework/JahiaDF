@@ -40,9 +40,9 @@
         <developerConnection>scm:git:git@github.com:danta/JahiaDF.git</developerConnection>
     </scm>
     <properties>
-        <!-- nexus properties -->
-        <nexus.dev.url>http://54.236.230.120/nexus/content/repositories/danta-development</nexus.dev.url>
-        <nexus.staging.url>http://54.236.230.120/nexus/content/repositories/danta-staging</nexus.staging.url>
+        <!-- Nexus properties -->
+        <nexus.snapshots.url>http://repo.tikaltechnologies.io/repository/danta-snapshots/</nexus.snapshots.url>
+        <nexus.releases.url>http://repo.tikaltechnologies.io/repository/danta-releases/</nexus.releases.url>
     </properties>
 
     <repositories>
@@ -128,8 +128,8 @@
 
         </plugins>
     </build>
-    <!-- This profile deploys the bundle JAR to nexus dev repository -->
     <profiles>
+        <!-- This profile deploys a JAR to nexus snapshots repository -->
         <profile>
             <id>deploy-nexus</id>
             <build>
@@ -146,10 +146,10 @@
                                     <goal>deploy-file</goal>
                                 </goals>
                                 <configuration>
-                                    <repositoryId>danta-development</repositoryId>
+                                    <repositoryId>danta-snapshots</repositoryId>
                                     <packaging>jar</packaging>
                                     <generatePom>true</generatePom>
-                                    <url>${nexus.dev.url}</url>
+                                    <url>${nexus.snapshots.url}</url>
                                     <artifactId>${project.artifactId}</artifactId>
                                     <groupId>${project.groupId}</groupId>
                                     <version>${project.version}</version>
@@ -161,14 +161,15 @@
                 </plugins>
             </build>
         </profile>
-        <!-- This profile deploys a bundle JAR to nexus staging repository -->
+        <!-- This profile deploys a JAR to nexus releases repository -->
         <profile>
-            <id>deploy-nexus-staging</id>
+            <id>deploy-nexus-release</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.8.2</version>
                         <executions>
                             <execution>
                                 <id>deploy-nexus</id>
@@ -177,10 +178,10 @@
                                     <goal>deploy-file</goal>
                                 </goals>
                                 <configuration>
-                                    <repositoryId>danta-staging</repositoryId>
+                                    <repositoryId>danta-releases</repositoryId>
                                     <packaging>jar</packaging>
                                     <generatePom>true</generatePom>
-                                    <url>${nexus.staging.url}</url>
+                                    <url>${nexus.releases.url}</url>
                                     <artifactId>${project.artifactId}</artifactId>
                                     <groupId>${project.groupId}</groupId>
                                     <version>${project.version}</version>
@@ -337,11 +338,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>danta-snapshots</id>
-            <url>http://repo.tikaltechnologies.io/repository/danta-snapshots/</url>
+            <url>${nexus.snapshots.url}</url>
         </snapshotRepository>
         <repository>
             <id>danta-releases</id>
-            <url>http://repo.tikaltechnologies.io/repository/danta-snapshots/</url>
+            <url>${nexus.releases.url}</url>
         </repository>
     </distributionManagement>
 </project>

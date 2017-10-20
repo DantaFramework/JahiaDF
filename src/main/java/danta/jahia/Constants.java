@@ -34,9 +34,6 @@ import static org.apache.jackrabbit.spi.Name.*;
  */
 public class Constants {
 
-    public static final String PATH_DETAILS_LIST_PATH_PROPERTY_NAME = "path";
-    public static final String PATH_DETAILS_LIST_PATHS_PROPERTY_NAME = "paths";
-
     public static final String JAHIA_RENDER_CONTEXT = "jahiaRenderContext";
     public static final String JAHIA_RESOURCE = "jahiaResource";
     public static final String JAHIA_SCRIPT_VIEW = "jahiaScriptView";
@@ -57,8 +54,6 @@ public class Constants {
     public static final String IS_PREVIEW_MODE = "jahia_preview_mode";
     public static final String IS_LIVE_MODE = "jahia_live_mode";
     public static final String IS_AJAX_REQUEST = "jahia_is_ajax_request";
-    public static final String LIVE_WORKSPACE = "live";
-    public static final String DEFAULT_WORKSPACE = "default";
     public static final String JAHIA_WORKSPACE = "workspace";
 
     // Jahia Default Properties Page
@@ -128,5 +123,8 @@ public class Constants {
 
     // Web services
     public static final String SERVER_RESPONSE_CONTENT_TYPE = "application/json; charset=utf-8";
+
+    // Generic
+    public static final String HTML_EXT = ".html";
 
 }

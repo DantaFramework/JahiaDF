@@ -31,6 +31,9 @@ import javax.jcr.Session;
 
 import java.util.Map;
 
+import static danta.Constants.HTML_EXT;
+import static danta.jahia.Constants.JAHIA_JNT_PAGE;
+
 /**
  * Resource utility class
  *
@@ -87,10 +90,10 @@ public class ResourceUtils {
                 URLGenerator urlGenerator = new URLGenerator(renderContext, resource);
                 String base = urlGenerator.getBase();
                 String nodeType = n.getPrimaryNodeType().getName();
-                if(nodeType.equals("jnt:page")) {
-                    resourcePath = base + n.getPath() + ".html";
+                if(nodeType.equals(JAHIA_JNT_PAGE)) {
+                    resourcePath = base + n.getPath() + HTML_EXT;
                 } else {
-                    resourcePath = base + n.getPath();
+                    resourcePath = ( (JCRNodeWrapper) n).getUrl();
                 }
 
             } catch (Exception e){
@@ -115,7 +118,7 @@ public class ResourceUtils {
         URLResolver urlResolver = urlResolverFactory.createURLResolver(url, renderContext);
         if(urlResolver != null) {
             path = urlResolver.getPath();
-            path = path.replace(".html", "");
+            path = path.replace(HTML_EXT, "");
         }
         return path;
     }

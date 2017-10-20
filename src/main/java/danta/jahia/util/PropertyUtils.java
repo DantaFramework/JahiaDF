@@ -26,13 +26,11 @@ import danta.core.util.ObjectUtils;
 import net.minidev.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.jcr.Node;
-import javax.jcr.Property;
-import javax.jcr.PropertyType;
-import javax.jcr.Value;
-import javax.jcr.ItemNotFoundException;
+import javax.jcr.*;
 import java.util.*;
 
+import org.jahia.bin.Render;
+import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,24 +85,6 @@ public class PropertyUtils {
                 else
                     content = property.getValue().getString();
                 break;
-            case PropertyType.WEAKREFERENCE:
-                if (isMulti) {
-                    Value[] values = property.getValues();
-                    List<String> distilledValues = new ArrayList<>();
-                    for (int i=0;i<values.length; i++){
-                        String referenceUUID = values[i].getString();
-                        try {
-                            distilledValues.add(ResourceUtils.getResourceNodePath(property.getSession(), referenceUUID));
-                        } catch (ItemNotFoundException e) {
-                            LOG.error("Reference to invalid item (e.g., unpublished content): " + e.getMessage(), e);
-                        }
-                    }
-                    content = distilledValues;
-                }else {
-                    String UUID = property.getValue().getString();
-                    content = ResourceUtils.getResourceNodePath(property.getSession(), UUID);
-                }
-                break;
             case PropertyType.NAME:
             case PropertyType.STRING:
             case PropertyType.PATH:
@@ -117,6 +97,40 @@ public class PropertyUtils {
                 break;
         }
         return content;
+    }
+
+    public static Object resolve(Property property, RenderContext renderContext, Resource resource)
+        throws RepositoryException {
+            Object resolvedValue;
+
+            if (property.isMultiple()) {
+                Value[] values = property.getValues();
+                List<String> distilledValues = new ArrayList<>();
+                for (int i=0;i<values.length; i++){
+                    String referenceUUID = values[i].getString();
+                    try {
+                        distilledValues.add(ResourceUtils.getResourceNodePath(
+                                property.getSession(),
+                                referenceUUID,
+                                renderContext,
+                                resource ));
+                    } catch (ItemNotFoundException e) {
+                        LOG.error("Reference to invalid item (e.g., unpublished content): " +
+                                e.getMessage(), e);
+                    }
+                }
+                resolvedValue = distilledValues;
+
+            } else {
+                String UUID = property.getValue().getString();
+                resolvedValue = ResourceUtils.getResourceNodePath(
+                        property.getSession(),
+                        UUID,
+                        renderContext,
+                        resource );
+            }
+
+        return resolvedValue;
     }
 
     /**
@@ -147,6 +161,47 @@ public class PropertyUtils {
                 return ignoreSystemNames && StringUtils.startsWithAny(input, RESERVED_SYSTEM_NAME_PREFIXES);
             }
         })));
+    }
+
+    /**
+     * Takes an Iterator properties and turns it into map.
+     *
+     * @param properties This is an Iterator of Properties
+     * @return map This is a list of Objects of Property
+     * @throws Exception
+     */
+    public static Map<String, Object> propsToMap(Iterator properties, RenderContext renderContext, Resource resource)
+            throws Exception {
+        return propsToMap(properties, renderContext, resource, true);
+    }
+
+    /**
+     * Takes an Iterator properties and turns it into map.
+     *
+     * @param properties This is a list of Iterator Properties
+     * @param ignoreSystemNames This is a boolean value to whether ignore system names
+     * @return content This is a list of Objects of Property
+     * @throws Exception
+     */
+    public static Map<String, Object> propsToMap(
+            Iterator properties,
+            RenderContext renderContext,
+            Resource resource,
+            boolean ignoreSystemNames)
+            throws Exception {
+        Map<String, Object> content = new JSONObject();
+        while (properties.hasNext()) {
+            Property property = (Property) properties.next(); // This is required so we can take any kind of Iterator, not just PropertyIterator
+            String propertyName = property.getName();
+            if (ignoreSystemNames && StringUtils.startsWithAny(propertyName, RESERVED_SYSTEM_NAME_PREFIXES))
+                continue;
+            if (property.getType() == (PropertyType.WEAKREFERENCE)) {
+                content.put(propertyName, resolve(property, renderContext, resource));
+            } else {
+                content.put(propertyName, distill(property));
+            }
+        }
+        return content;
     }
 
     /**

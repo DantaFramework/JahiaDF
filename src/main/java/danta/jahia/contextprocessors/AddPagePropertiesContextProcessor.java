@@ -85,7 +85,10 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                     if (mainResource != null) {
                         JCRNodeWrapper mainNode = mainResource.getNode();
 
-                        Map<String, Object> propsMap = propsToMap(mainNode.getProperties());
+                        Map<String, Object> propsMap = propsToMap(
+                                mainNode.getProperties(),
+                                renderContext,
+                                resource);
                         for (String propertyName : propsMap.keySet()) {
                             if (!StringUtils.startsWithAny(propertyName, RESERVED_SYSTEM_NAME_PREFIXES)) {
                                 pageContent.put(propertyName, propsMap.get(propertyName));
@@ -141,7 +144,10 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                                 Node pagesPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME);
                                 Node pageProperties = this.getPagePropertiesNode(pagesPropertiesNode, mainNode.getPath() );
                                 if (pageProperties != null){
-                                    Map<String, Object> propsMapPage = propsToMap(pageProperties);
+                                    Map<String, Object> propsMapPage = propsToMap(
+                                            pageProperties.getProperties(),
+                                            renderContext,
+                                            resource);
                                     pageContent.putAll(propsMapPage);
                                 }else{
                                     LOG.error("Page Properties node not found For Path: " + mainNode.getPath() );

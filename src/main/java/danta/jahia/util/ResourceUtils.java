@@ -74,6 +74,8 @@ public class ResourceUtils {
      *
      * @param session The session used to get resource node path
      * @param resourceNodeUUID The uuid used to get resource node path
+     * @param renderContext A renderContext object
+     * @param resource A resource object
      * @return resourceNodePath
      * @throws RepositoryException
      */

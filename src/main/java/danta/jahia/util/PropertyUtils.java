@@ -99,6 +99,15 @@ public class PropertyUtils {
         return content;
     }
 
+    /**
+     * Convert property to map
+     *
+     * @param property A property holding weak references
+     * @param renderContext A renderContext object
+     * @param resource A resource object
+     * @return content An object containing weak references tralsated into valid URLs
+     * @throws RepositoryException
+     */
     public static Object resolve(Property property, RenderContext renderContext, Resource resource)
         throws RepositoryException {
             Object resolvedValue;
@@ -167,6 +176,8 @@ public class PropertyUtils {
      * Takes an Iterator properties and turns it into map.
      *
      * @param properties This is an Iterator of Properties
+     * @param renderContext A renderContext object
+     * @param resource A resource object
      * @return map This is a list of Objects of Property
      * @throws Exception
      */
@@ -180,6 +191,9 @@ public class PropertyUtils {
      *
      * @param properties This is a list of Iterator Properties
      * @param ignoreSystemNames This is a boolean value to whether ignore system names
+     * @param renderContext A renderContext object
+     * @param resource A resource object
+     * @param ignoreSystemNames A boolean flag indicating if systems names should be ignored
      * @return content This is a list of Objects of Property
      * @throws Exception
      */

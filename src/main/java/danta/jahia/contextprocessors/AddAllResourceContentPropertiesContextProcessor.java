@@ -44,7 +44,6 @@ import static danta.core.Constants.XK_CONTENT_ID_CP;
 import static danta.jahia.Constants.JAHIA_RENDER_CONTEXT;
 import static danta.jahia.Constants.JAHIA_RESOURCE;
 import static danta.jahia.Constants.JCR_NODE_UUID;
-import danta.jahia.util.PropertyUtils;
 
 /**
  * The context processor for adding resource content properties to content model

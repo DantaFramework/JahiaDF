@@ -105,10 +105,10 @@ public class PropertyUtils {
      * @param property A property holding weak references
      * @param renderContext A renderContext object
      * @param resource A resource object
-     * @return content An object containing weak references tralsated into valid URLs
+     * @return content An object containing weak references translated into valid URLs
      * @throws RepositoryException
      */
-    public static Object resolve(Property property, RenderContext renderContext, Resource resource)
+    public static Object resolveReference(Property property, RenderContext renderContext, Resource resource)
         throws RepositoryException {
             Object resolvedValue;
 
@@ -210,7 +210,7 @@ public class PropertyUtils {
             if (ignoreSystemNames && StringUtils.startsWithAny(propertyName, RESERVED_SYSTEM_NAME_PREFIXES))
                 continue;
             if (property.getType() == (PropertyType.WEAKREFERENCE)) {
-                content.put(propertyName, resolve(property, renderContext, resource));
+                content.put(propertyName, resolveReference(property, renderContext, resource));
             } else {
                 content.put(propertyName, distill(property));
             }

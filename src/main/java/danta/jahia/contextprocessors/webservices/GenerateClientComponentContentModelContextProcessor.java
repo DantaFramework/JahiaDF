@@ -25,7 +25,7 @@ import danta.api.configuration.Configuration;
 import danta.api.configuration.Mode;
 import danta.api.exceptions.ProcessException;
 import danta.core.contextprocessors.AbstractCheckComponentCategoryContextProcessor;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.jahia.services.render.Resource;
 import org.slf4j.Logger;

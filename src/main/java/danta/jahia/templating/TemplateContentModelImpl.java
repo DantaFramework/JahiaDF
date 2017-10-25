@@ -20,7 +20,7 @@
 package danta.jahia.templating;
 
 import com.github.jknack.handlebars.Context;
-import danta.api.ContentModel;
+import danta.api.TemplateContentModel;
 import danta.core.commons.collections.POJOBackedMap;
 import net.minidev.json.JSONObject;
 
@@ -42,18 +42,19 @@ import static danta.core.util.ObjectUtils.wrap;
  * @version     1.0.0
  * @since       2016-10-06
  */
-public class TemplateContentModel implements ContentModel{
+public class TemplateContentModelImpl
+        implements TemplateContentModel {
 
     private volatile Context currentContext;
     private final Context rootContext;
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    public TemplateContentModel(final HttpServletRequest request, final HttpServletResponse response) {
+    public TemplateContentModelImpl(final HttpServletRequest request, final HttpServletResponse response) {
         this(request, response, new JSONObject());
     }
 
-    public TemplateContentModel(final HttpServletRequest request, final HttpServletResponse response, final Map<String, Object> initialModelData) {
+    public TemplateContentModelImpl(final HttpServletRequest request, final HttpServletResponse response, final Map<String, Object> initialModelData) {
         this.request = request;
         this.response = response;
 
@@ -61,8 +62,8 @@ public class TemplateContentModel implements ContentModel{
         rootContext.data(HTTP_REQUEST, request);
     }
 
-    protected final TemplateContentModel newInstance(final HttpServletRequest request, final HttpServletResponse response) {
-        return new TemplateContentModel(request, response);
+    protected final TemplateContentModelImpl newInstance(final HttpServletRequest request, final HttpServletResponse response) {
+        return new TemplateContentModelImpl(request, response);
     }
 
     private Context newChildContext() {
@@ -84,14 +85,14 @@ public class TemplateContentModel implements ContentModel{
     /**
      * @return
      */
-    synchronized TemplateContentModel extendScope(final Map<String, Object> isolatedModelData) {
+    synchronized TemplateContentModelImpl extendScope(final Map<String, Object> isolatedModelData) {
         return extendScope().isolateToCurrentScope(wrap(isolatedModelData));
     }
 
     /**
      * @return
      */
-    synchronized TemplateContentModel extendScope() {
+    synchronized TemplateContentModelImpl extendScope() {
         currentContext = newChildContext();
         invalidateJSONString();
         return this;
@@ -100,7 +101,7 @@ public class TemplateContentModel implements ContentModel{
     /**
      * @return
      */
-    synchronized TemplateContentModel isolateScope() {
+    synchronized TemplateContentModelImpl isolateScope() {
         currentContext = newChildContext(); // TODO: Flatten Model Hierarchy
         invalidateJSONString();
         return this;
@@ -109,7 +110,7 @@ public class TemplateContentModel implements ContentModel{
     /**
      * @return
      */
-    synchronized TemplateContentModel retractScope() {
+    synchronized TemplateContentModelImpl retractScope() {
         if (currentContext != rootContext) {
             Context oldContext = currentContext;
             currentContext = currentContext.parent();
@@ -119,13 +120,13 @@ public class TemplateContentModel implements ContentModel{
         return this;
     }
 
-    TemplateContentModel isolateToCurrentScope(final Map<String, Object> isolatedModelData) {
+    TemplateContentModelImpl isolateToCurrentScope(final Map<String, Object> isolatedModelData) {
         currentScopeData().merge(wrap(isolatedModelData));
         invalidateJSONString();
         return this;
     }
 
-    private synchronized TemplateContentModel set(final Context context, final String path, final Object value) {
+    private synchronized TemplateContentModelImpl set(final Context context, final String path, final Object value) {
         List<String> keys = parsePath(path);
         StringBuilder builtPath = new StringBuilder();
         Map<String, Object> modelDataObj = scopeDataFor(context);
@@ -164,7 +165,7 @@ public class TemplateContentModel implements ContentModel{
         ISOLATED
     }
 
-    public TemplateContentModel set(final String path, final Object value, final ScopeLocality locality) {
+    public TemplateContentModelImpl set(final String path, final Object value, final ScopeLocality locality) {
         switch (locality) {
             case ROOT:
                 return set(rootContext(), path, value);
@@ -198,11 +199,11 @@ public class TemplateContentModel implements ContentModel{
      */
 
     @Override
-    public TemplateContentModel set(final String path, final Object value) {
+    public TemplateContentModelImpl set(final String path, final Object value) {
         return set(path, value, ScopeLocality.CLOSEST);
     }
 
-    public TemplateContentModel setAsIsolated(final String path, final Object value) {
+    public TemplateContentModelImpl setAsIsolated(final String path, final Object value) {
         return set(path, value, ScopeLocality.ISOLATED);
     }
 
@@ -212,7 +213,7 @@ public class TemplateContentModel implements ContentModel{
      *
      * @return
      */
-    public TemplateContentModel setToRoot(final String name, final Object value) {
+    public TemplateContentModelImpl setToRoot(final String name, final Object value) {
         return set(name, value, ScopeLocality.ROOT);
     }
 
@@ -248,7 +249,7 @@ public class TemplateContentModel implements ContentModel{
      *
      * @return This instances of the TemplateContentModel to allow chaining
      */
-    public TemplateContentModel setAttribute(final String name, final Object value) {
+    public TemplateContentModelImpl setAttribute(final String name, final Object value) {
         currentContext.data(name, value);
         return this;
     }

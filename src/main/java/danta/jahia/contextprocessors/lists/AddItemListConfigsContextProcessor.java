@@ -22,7 +22,7 @@ package danta.jahia.contextprocessors.lists;
 import org.jahia.services.render.Resource;
 
 import danta.api.ExecutionContext;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.api.configuration.Configuration;
 import danta.api.configuration.Mode;
 import danta.api.exceptions.ProcessException;

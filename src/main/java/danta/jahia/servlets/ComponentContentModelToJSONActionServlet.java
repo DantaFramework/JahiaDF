@@ -21,7 +21,7 @@ package danta.jahia.servlets;
 
 import danta.api.ContextProcessorEngine;
 
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.api.configuration.Configuration;
 import danta.api.configuration.ConfigurationProvider;
 import danta.api.configuration.Mode;

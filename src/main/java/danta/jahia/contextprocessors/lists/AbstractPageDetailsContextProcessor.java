@@ -21,7 +21,7 @@ package danta.jahia.contextprocessors.lists;
 
 import danta.api.ExecutionContext;
 import danta.api.configuration.Configuration;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.jahia.util.ResourceUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;

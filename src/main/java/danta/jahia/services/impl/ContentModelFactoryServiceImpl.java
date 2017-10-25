@@ -23,7 +23,7 @@ import danta.api.ContentModel;
 import danta.api.ContextProcessorEngine;
 import danta.core.execution.ExecutionContextImpl;
 import danta.jahia.services.ContentModelFactoryService;
-import danta.jahia.templating.TemplateContentModel;
+import danta.jahia.templating.TemplateContentModelImpl;
 import org.apache.felix.scr.annotations.*;
 import org.jahia.services.render.*;
 import org.slf4j.Logger;
@@ -61,7 +61,7 @@ public class ContentModelFactoryServiceImpl implements ContentModelFactoryServic
     @Override
     public ContentModel getContentModel (final HttpServletRequest request, final HttpServletResponse response,
                                          RenderContext renderContext, Resource resource) {
-        final ContentModel contentModel = new TemplateContentModel(request, response);
+        final ContentModel contentModel = new TemplateContentModelImpl(request, response);
         try {
             View view = (View) request.getAttribute(JAHIA_SCRIPT_VIEW);
 

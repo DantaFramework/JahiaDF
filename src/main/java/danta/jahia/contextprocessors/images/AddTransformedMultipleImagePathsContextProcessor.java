@@ -21,7 +21,7 @@ package danta.jahia.contextprocessors.images;
 
 import com.google.common.collect.Sets;
 import danta.api.ExecutionContext;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.api.exceptions.ProcessException;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;

@@ -20,7 +20,7 @@
 package danta.jahia.contextprocessors;
 
 import com.google.common.collect.Sets;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.api.ExecutionContext;
 import danta.api.configuration.Configuration;
 import danta.api.configuration.Mode;

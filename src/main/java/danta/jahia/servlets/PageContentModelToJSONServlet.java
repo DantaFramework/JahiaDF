@@ -49,7 +49,7 @@ import danta.api.configuration.Configuration;
 import danta.api.configuration.ConfigurationProvider;
 import danta.api.configuration.Mode;
 import danta.jahia.services.ContentModelFactoryService;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 
 import static danta.Constants.*;
 import static danta.core.Constants.*;

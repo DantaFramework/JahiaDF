@@ -84,7 +84,7 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
                     if (dantaNode != null && dantaNode.hasNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME)) {
 
                         JCRNodeWrapper globalPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME);
-                        Map globalContext = processNode(globalPropertiesNode);
+                        Map globalContext = processNode(globalPropertiesNode, renderContext, resource);
                         contentModel.set(GLOBAL_PROPERTIES_KEY , globalContext);
 
                     } else {
@@ -99,7 +99,7 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
         }
     }
 
-    protected Map processNode(JCRNodeWrapper node)throws Exception{
+    protected Map processNode(JCRNodeWrapper node, RenderContext renderContext, Resource resource)throws Exception{
         if (node.hasNodes()){
             // Start a new level
             LinkedHashMap level = new LinkedHashMap();
@@ -107,18 +107,20 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
             Iterator<JCRNodeWrapper> iterator = node.getNodes().iterator();
             while( iterator.hasNext()){
                 JCRNodeWrapper childNode = iterator.next();
-                level.put(childNode.getName(), this.processNode(childNode));
+                level.put(childNode.getName(), this.processNode(childNode, renderContext, resource));
             }
 
             // Add current node properties (if any)
-            Map<String, Object> currentProperties = PropertyUtils.propsToMap(node);
+            Map<String, Object> currentProperties = PropertyUtils.propsToMap(
+                    node.getProperties(), renderContext, resource);
             level.putAll(currentProperties);
 
             return level;
 
         } else {
             // Leaf node reached
-            Map<String, Object> properties = PropertyUtils.propsToMap(node);
+            Map<String, Object> properties = PropertyUtils.propsToMap(
+                    node.getProperties(), renderContext, resource);
 
             return properties;
         }

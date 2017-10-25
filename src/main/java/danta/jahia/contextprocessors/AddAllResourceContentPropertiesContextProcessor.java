@@ -24,10 +24,12 @@ import danta.api.ExecutionContext;
 import danta.api.exceptions.ProcessException;
 import danta.core.contextprocessors.AbstractCheckComponentCategoryContextProcessor;
 import danta.jahia.templating.TemplateContentModel;
+import danta.jahia.util.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
+import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +41,10 @@ import java.util.Set;
 
 import static danta.Constants.*;
 import static danta.core.Constants.XK_CONTENT_ID_CP;
+import static danta.jahia.Constants.JAHIA_RENDER_CONTEXT;
 import static danta.jahia.Constants.JAHIA_RESOURCE;
 import static danta.jahia.Constants.JCR_NODE_UUID;
-import static danta.jahia.util.PropertyUtils.propsToMap;
+import danta.jahia.util.PropertyUtils;
 
 /**
  * The context processor for adding resource content properties to content model
@@ -73,13 +76,15 @@ public class AddAllResourceContentPropertiesContextProcessor
         try {
             Map<String, Object> content = new HashMap<>();
             Resource resource = (Resource) executionContext.get(JAHIA_RESOURCE);
+            RenderContext renderContext = (RenderContext) executionContext.get(JAHIA_RENDER_CONTEXT);
 
             if (resource != null) {
                 Node node = resource.getNode();
                 if (node != null) {
                     String componentContentId = DigestUtils.md5Hex(resource.getPath());
                     content.put(XK_CONTENT_ID_CP, componentContentId);
-                    Map<String, Object> propsMap = propsToMap(node.getProperties());
+                    Map<String, Object> propsMap = PropertyUtils.propsToMap(
+                            node.getProperties(), renderContext, resource);
                     for (String propertyName : propsMap.keySet()) {
                         if (!StringUtils.startsWithAny(propertyName, RESERVED_SYSTEM_NAME_PREFIXES)) {
                             content.put(propertyName, propsMap.get(propertyName));

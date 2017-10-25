@@ -21,11 +21,7 @@ package danta.jahia.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jahia.services.content.JCRNodeWrapper;
-import org.jahia.services.content.JCRNodeWrapperImpl;
-import org.jahia.services.content.JCRSessionWrapper;
-import org.jahia.services.render.RenderContext;
-import org.jahia.services.render.URLResolver;
-import org.jahia.services.render.URLResolverFactory;
+import org.jahia.services.render.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +30,9 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
 import java.util.Map;
+
+import static danta.Constants.HTML_EXT;
+import static danta.jahia.Constants.JAHIA_JNT_PAGE;
 
 /**
  * Resource utility class
@@ -50,24 +49,6 @@ public class ResourceUtils {
      * Forbid instantiation
      */
     private ResourceUtils() {}
-
-    /**
-     * Get resource node path using jcr session wrapper and uuid
-     *
-     * @param session The JCRSessionWrapper to be used to get resource node path
-     * @param resourceNodeUUID The uuid to be used to get resource node path
-     * @return resourceNodePath
-     * @throws RepositoryException
-     */
-    public static String getResourceNodePath(final JCRSessionWrapper session, final String resourceNodeUUID) throws RepositoryException {
-        String resourcePath = "";
-        if (StringUtils.isNotEmpty(resourceNodeUUID)) {
-            JCRNodeWrapper resourceNode = session.getNodeByIdentifier(resourceNodeUUID);
-            resourcePath = resourceNode.getUrl();
-        }
-
-        return resourcePath;
-    }
 
     /**
      * Get property value using node and property name
@@ -93,22 +74,36 @@ public class ResourceUtils {
      *
      * @param session The session used to get resource node path
      * @param resourceNodeUUID The uuid used to get resource node path
+     * @param renderContext A renderContext object
+     * @param resource A resource object
      * @return resourceNodePath
      * @throws RepositoryException
      */
-    public static String getResourceNodePath(final Session session, final String resourceNodeUUID) throws RepositoryException {
+    public static String getResourceNodePath(final Session session,
+                                             final String resourceNodeUUID,
+                                             final RenderContext renderContext,
+                                             final Resource resource)
+            throws RepositoryException {
         String resourcePath = "";
         if (StringUtils.isNotEmpty(resourceNodeUUID)) {
 
             Node n = session.getNodeByIdentifier(resourceNodeUUID);
             try {
-                JCRNodeWrapper resourceNode = (JCRNodeWrapper) n;
-                resourcePath = resourceNode.getUrl();
-            }catch (Exception e){
-                log.error("Error casting Node: "+n+ " to JCRNodeWrapper, instead the repository path will be used without the extra workspace metadata ",e);
+                URLGenerator urlGenerator = new URLGenerator(renderContext, resource);
+                String base = urlGenerator.getBase();
+                String nodeType = n.getPrimaryNodeType().getName();
+                if(nodeType.equals(JAHIA_JNT_PAGE)) {
+                    resourcePath = base + n.getPath() + HTML_EXT;
+                } else {
+                    resourcePath = ( (JCRNodeWrapper) n).getUrl();
+                }
+
+            } catch (Exception e){
+                log.error("Error casting Node: " + n + " to JCRNodeWrapper, using path only", e);
                 resourcePath = n.getPath();
             }
         }
+
         return resourcePath;
     }
 
@@ -125,7 +120,7 @@ public class ResourceUtils {
         URLResolver urlResolver = urlResolverFactory.createURLResolver(url, renderContext);
         if(urlResolver != null) {
             path = urlResolver.getPath();
-            path = path.replace(".html", "");
+            path = path.replace(HTML_EXT, "");
         }
         return path;
     }

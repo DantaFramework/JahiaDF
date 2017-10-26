@@ -20,7 +20,7 @@
 package danta.jahia.contextprocessors;
 
 import com.google.common.collect.Sets;
-import danta.api.TemplateContentModel;
+import danta.jahia.templating.TemplateContentModelImpl;
 import danta.api.ExecutionContext;
 import danta.api.configuration.Configuration;
 import danta.api.configuration.Mode;
@@ -32,11 +32,9 @@ import org.apache.felix.scr.annotations.Service;
 import org.jahia.services.render.Resource;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 import static danta.Constants.*;
-import static danta.Constants.DOT;
 import static danta.core.Constants.XK_DESERIALIZE_JSON_PROPS_CP;
 import static danta.jahia.Constants.JAHIA_RESOURCE;
 
@@ -74,7 +72,7 @@ import static danta.jahia.Constants.JAHIA_RESOURCE;
 @Component
 @Service
     public class DeserializeJSONPropertyValuesContextProcessor
-        extends AbstractCheckComponentCategoryContextProcessor<TemplateContentModel> {
+        extends AbstractCheckComponentCategoryContextProcessor<TemplateContentModelImpl> {
 
     @Override
     public Set<String> anyOf() {
@@ -87,7 +85,7 @@ import static danta.jahia.Constants.JAHIA_RESOURCE;
     }
 
     @Override
-    public void process(final ExecutionContext executionContext, TemplateContentModel contentModel)
+    public void process(final ExecutionContext executionContext, TemplateContentModelImpl contentModel)
             throws ProcessException {
         try {
             Resource resource = (Resource) executionContext.get(JAHIA_RESOURCE);

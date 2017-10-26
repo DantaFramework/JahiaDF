@@ -154,9 +154,9 @@ public class DantaScriptEngine extends AbstractScriptEngine {
                         }
                     }
 
-                    TemplateContentModel contentModel = (TemplateContentModel) request.getAttribute(TEMPLATE_CONTENT_MODEL_ATTR_NAME);
+                    TemplateContentModelImpl contentModel = (TemplateContentModelImpl) request.getAttribute(TEMPLATE_CONTENT_MODEL_ATTR_NAME);
                     if (contentModel == null) {
-                        contentModel = new TemplateContentModel(request, response);
+                        contentModel = new TemplateContentModelImpl(request, response);
                         request.setAttribute(TEMPLATE_CONTENT_MODEL_ATTR_NAME, contentModel);
                     } else {
                         contentModel.extendScope();

@@ -22,7 +22,7 @@ package danta.jahia.contextprocessors.lists;
 import com.google.common.collect.Sets;
 import danta.api.ExecutionContext;
 import danta.api.exceptions.ProcessException;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.jahia.util.ResourceUtils;
 import net.minidev.json.JSONObject;
 import org.apache.felix.scr.annotations.Component;

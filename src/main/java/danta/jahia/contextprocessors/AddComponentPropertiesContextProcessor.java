@@ -24,17 +24,15 @@ import danta.api.ExecutionContext;
 import danta.api.configuration.Configuration;
 import danta.api.exceptions.ProcessException;
 import danta.core.contextprocessors.AbstractCheckComponentCategoryContextProcessor;
-import danta.jahia.templating.TemplateContentModel;
+import danta.jahia.templating.TemplateContentModelImpl;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.jahia.services.render.Resource;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 import static danta.Constants.*;
 import static danta.core.util.ObjectUtils.wrap;
-import static danta.jahia.Constants.HTTP_REQUEST;
 import static danta.jahia.Constants.JAHIA_RESOURCE;
 
 /**
@@ -46,7 +44,7 @@ import static danta.jahia.Constants.JAHIA_RESOURCE;
  */
 @Component
 @Service
-public class AddComponentPropertiesContextProcessor extends AbstractCheckComponentCategoryContextProcessor<TemplateContentModel> {
+public class AddComponentPropertiesContextProcessor extends AbstractCheckComponentCategoryContextProcessor<TemplateContentModelImpl> {
 
     @Override
     public Set<String> anyOf() {
@@ -60,7 +58,7 @@ public class AddComponentPropertiesContextProcessor extends AbstractCheckCompone
     }
 
     @Override
-    public void process(final ExecutionContext executionContext, TemplateContentModel contentModel)throws ProcessException {
+    public void process(final ExecutionContext executionContext, TemplateContentModelImpl contentModel)throws ProcessException {
         try {
             Resource resource = (Resource) executionContext.get(JAHIA_RESOURCE);
             if (resource != null) {

@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+import danta.api.TemplateContentModel;
 import static danta.jahia.Constants.HTTP_REQUEST;
 import static danta.jahia.templating.DantaScriptEngine.TEMPLATE_CONTENT_MODEL_ATTR_NAME;
 

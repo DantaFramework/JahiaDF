@@ -24,7 +24,7 @@ import danta.api.ExecutionContext;
 import danta.api.configuration.Configuration;
 import danta.api.exceptions.ProcessException;
 import danta.core.contextprocessors.AbstractCheckComponentCategoryContextProcessor;
-import danta.jahia.templating.TemplateContentModel;
+import danta.jahia.templating.TemplateContentModelImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
@@ -54,7 +54,7 @@ import static danta.jahia.Constants.RESERVED_SYSTEM_NAME_PREFIXES;
  */
 @Component
 @Service
-public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCategoryContextProcessor<TemplateContentModel>  {
+public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCategoryContextProcessor<TemplateContentModelImpl>  {
 
     private static Logger LOG = LoggerFactory.getLogger(AddPagePropertiesContextProcessor.class);
 
@@ -70,7 +70,7 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
     }
 
     @Override
-    public void process(final ExecutionContext executionContext, final TemplateContentModel contentModel)throws ProcessException {
+    public void process(final ExecutionContext executionContext, final TemplateContentModelImpl contentModel)throws ProcessException {
         try {
 
             Resource resource = (Resource) executionContext.get(JAHIA_RESOURCE);

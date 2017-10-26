@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
 import danta.api.ExecutionContext;
 import danta.api.configuration.Configuration;
 import danta.api.exceptions.ProcessException;
-import danta.jahia.templating.TemplateContentModel;
+import danta.api.TemplateContentModel;
 import danta.jahia.util.ResourceUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Component;

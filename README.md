@@ -41,7 +41,11 @@ Read [here](CONTRIBUTING.md) for more information.
 
     mvn clean install
 
-## Deploy to Jahia
+## Deploy to Jahia via web console (using Maven Sling Plugin )
+
+    mvn clean install -Pdeploy-jahia
+
+## Deploy to Jahia via file system (using Jahia Maven Plugin)
 
 Edit your Maven settings.xml (usually in ~/.m2/settings.xml) to add the following profile:
 
@@ -58,7 +62,7 @@ Make sure you modify the jahia.deploy.targetServerDirectory to point to the /tom
 
 Then you should be able to deploy your module using the following Maven command:
 
-    mvn clean install jahia:deploy -P jahia-local
+    mvn clean install jahia:deploy -Pjahia-local
     
 ## Credit
 

@@ -63,8 +63,6 @@ public class DantaScriptEngine extends AbstractScriptEngine {
     protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
     private static final String LOG_PRE = "|LAYER-X- SCRIPT ENGINE >|-> ";
 
-    public static final String TEMPLATE_CONTENT_MODEL_ATTR_NAME = "template__contentmodel";
-
     private ConfigurationProvider configurationProvider;
     private ContextProcessorEngine contextProcessorEngine;
     private DOMProcessorEngine domProcessorEngine;

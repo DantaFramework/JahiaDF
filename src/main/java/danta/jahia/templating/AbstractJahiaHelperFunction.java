@@ -31,7 +31,7 @@ import java.util.Map;
 
 import danta.api.TemplateContentModel;
 import static danta.jahia.Constants.HTTP_REQUEST;
-import static danta.jahia.templating.DantaScriptEngine.TEMPLATE_CONTENT_MODEL_ATTR_NAME;
+import static danta.Constants.TEMPLATE_CONTENT_MODEL_ATTR_NAME;
 
 /**
  * The abstraction for Jahia Helper Function

@@ -120,7 +120,7 @@
                     <instructions>
                         <Jahia-Module-Type>system</Jahia-Module-Type>
                         <Export-Package>danta.jahia.*, com.github.jknack.handlebars.*,com.github.jknack.* </Export-Package>
-                        <Import-Package>danta.core.util, danta.core.execution, javax.servlet.http,net.minidev.json;version=1.2.0, org.slf4j; version="[1.6, 2)"; resolution:=optional,
+                        <Import-Package>danta.core.util, danta.core.execution, javax.servlet.http,net.minidev.json;version=2.3.0, org.slf4j; version="[1.6, 2)"; resolution:=optional,
                             *,${jahia.plugin.projectPackageImport}
                         </Import-Package>
 

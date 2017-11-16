@@ -26,9 +26,6 @@ import net.minidev.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.CharArrayWriter;
-import java.io.PrintWriter;
 import java.util.*;
 
 import static danta.Constants.BLANK;
@@ -118,16 +115,6 @@ public class TemplateContentModelImpl
     }
 
     /**
-     * @param name
-     * @param value
-     *
-     * @return
-     */
-    public TemplateContentModelImpl setToRoot(final String name, final Object value) {
-        return set(name, value, ScopeLocality.ROOT);
-    }
-
-    /**
      * Set Attribute name to value. Attributes are not included in static representations of the ContentModel.
      * For example, a JSON representation provided to clients. They are also not included in any list of model keys or
      * values, and can only be retrieved by using their explicit key using getAttribute(), or using the standard get()
@@ -186,7 +173,7 @@ public class TemplateContentModelImpl
     public <T> boolean is(String name, Class<T> type) {
         return (has(name) && type != null && type.isAssignableFrom(get(name).getClass()));
     }
-    
+
     public HttpServletRequest request()
             throws Exception {
         return (has(HTTP_REQUEST)) ? getAs(HTTP_REQUEST, HttpServletRequest.class) : null;
@@ -218,17 +205,13 @@ public class TemplateContentModelImpl
         if (cachedJSONString == null) {
             cachedJSONString = toJSONObject().toJSONString();
         }
-        //return cachedJSONString;
+
         return toJSONObject().toString();
     }
 
     @Override
     public String toString() {
         return toJSONString();
-    }
-
-    protected final TemplateContentModelImpl newInstance(final HttpServletRequest request, final HttpServletResponse response) {
-        return new TemplateContentModelImpl(request, response);
     }
 
     Context rootContext() {
@@ -243,34 +226,12 @@ public class TemplateContentModelImpl
         return (JSONObject) context.model();
     }
 
-    /**
-     * @return
-     */
-    synchronized TemplateContentModelImpl extendScope(final Map<String, Object> isolatedModelData) {
-        return extendScope().isolateToCurrentScope(wrap(isolatedModelData));
-    }
-
-    /**
-     * @return
-     */
     synchronized TemplateContentModelImpl extendScope() {
         currentContext = newChildContext();
         invalidateJSONString();
         return this;
     }
 
-    /**
-     * @return
-     */
-    synchronized TemplateContentModelImpl isolateScope() {
-        currentContext = newChildContext(); // TODO: Flatten Model Hierarchy
-        invalidateJSONString();
-        return this;
-    }
-
-    /**
-     * @return
-     */
     synchronized TemplateContentModelImpl retractScope() {
         if (currentContext != rootContext) {
             Context oldContext = currentContext;
@@ -279,16 +240,6 @@ public class TemplateContentModelImpl
         }
         invalidateJSONString();
         return this;
-    }
-
-    final HttpServletResponse response()
-            throws Exception {
-        return response;
-    }
-
-    final HttpServletResponse wrappedResponse()
-            throws Exception {
-        return new CharResponseWrapper(response());
     }
 
     Context handlebarsContext() {
@@ -357,22 +308,4 @@ public class TemplateContentModelImpl
         cachedJSONString = null;
     }
 
-    static final class CharResponseWrapper
-            extends HttpServletResponseWrapper {
-
-        private CharArrayWriter output;
-
-        public CharResponseWrapper(HttpServletResponse response) {
-            super(response);
-            output = new CharArrayWriter();
-        }
-
-        public String toString() {
-            return output.toString();
-        }
-
-        public PrintWriter getWriter() {
-            return new PrintWriter(output);
-        }
-    }
 }

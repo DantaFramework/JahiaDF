@@ -48,10 +48,10 @@ public class TemplateContentModelImpl
     private final HttpServletResponse response;
     private volatile String cachedJSONString = null;
 
-    TemplateContentModelImpl isolateToCurrentScope(final Map<String, Object> isolatedModelData) {
-        currentScopeData().merge(wrap(isolatedModelData));
-        invalidateJSONString();
-        return this;
+    public enum ScopeLocality {
+        ROOT,
+        CLOSEST,
+        ISOLATED
     }
 
     public TemplateContentModelImpl(final HttpServletRequest request, final HttpServletResponse response) {
@@ -64,12 +64,6 @@ public class TemplateContentModelImpl
 
         currentContext = rootContext = Context.newBuilder((initialModelData == null) ? new JSONObject() : wrap(initialModelData)).build();
         rootContext.data(HTTP_REQUEST, request);
-    }
-
-    public enum ScopeLocality {
-        ROOT,
-        CLOSEST,
-        ISOLATED
     }
 
     public TemplateContentModelImpl set(final String path, final Object value, final ScopeLocality locality) {
@@ -212,18 +206,6 @@ public class TemplateContentModelImpl
         return toJSONString();
     }
 
-    Context rootContext() {
-        return rootContext;
-    }
-
-    JSONObject currentScopeData() {
-        return scopeDataFor(currentContext);
-    }
-
-    JSONObject scopeDataFor(Context context) {
-        return (JSONObject) context.model();
-    }
-
     synchronized TemplateContentModelImpl extendScope() {
         currentContext = newChildContext();
         invalidateJSONString();
@@ -242,6 +224,24 @@ public class TemplateContentModelImpl
 
     Context handlebarsContext() {
         return currentContext;
+    }
+
+    private TemplateContentModelImpl isolateToCurrentScope(final Map<String, Object> isolatedModelData) {
+        currentScopeData().merge(wrap(isolatedModelData));
+        invalidateJSONString();
+        return this;
+    }
+
+    private Context rootContext() {
+        return rootContext;
+    }
+
+    private JSONObject currentScopeData() {
+        return scopeDataFor(currentContext);
+    }
+
+    private JSONObject scopeDataFor(Context context) {
+        return (JSONObject) context.model();
     }
 
     private synchronized TemplateContentModelImpl set(final Context context, final String path, final Object value) {

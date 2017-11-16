@@ -49,6 +49,13 @@ public class TemplateContentModelImpl
     private final Context rootContext;
     private final HttpServletRequest request;
     private final HttpServletResponse response;
+    private volatile String cachedJSONString = null;
+
+    TemplateContentModelImpl isolateToCurrentScope(final Map<String, Object> isolatedModelData) {
+        currentScopeData().merge(wrap(isolatedModelData));
+        invalidateJSONString();
+        return this;
+    }
 
     public TemplateContentModelImpl(final HttpServletRequest request, final HttpServletResponse response) {
         this(request, response, new JSONObject());
@@ -60,103 +67,6 @@ public class TemplateContentModelImpl
 
         currentContext = rootContext = Context.newBuilder((initialModelData == null) ? new JSONObject() : wrap(initialModelData)).build();
         rootContext.data(HTTP_REQUEST, request);
-    }
-
-    protected final TemplateContentModelImpl newInstance(final HttpServletRequest request, final HttpServletResponse response) {
-        return new TemplateContentModelImpl(request, response);
-    }
-
-    private Context newChildContext() {
-        return Context.newBuilder(currentContext, new JSONObject()).build();
-    }
-
-    Context rootContext() {
-        return rootContext;
-    }
-
-    JSONObject currentScopeData() {
-        return scopeDataFor(currentContext);
-    }
-
-    JSONObject scopeDataFor(Context context) {
-        return (JSONObject) context.model();
-    }
-
-    /**
-     * @return
-     */
-    synchronized TemplateContentModelImpl extendScope(final Map<String, Object> isolatedModelData) {
-        return extendScope().isolateToCurrentScope(wrap(isolatedModelData));
-    }
-
-    /**
-     * @return
-     */
-    synchronized TemplateContentModelImpl extendScope() {
-        currentContext = newChildContext();
-        invalidateJSONString();
-        return this;
-    }
-
-    /**
-     * @return
-     */
-    synchronized TemplateContentModelImpl isolateScope() {
-        currentContext = newChildContext(); // TODO: Flatten Model Hierarchy
-        invalidateJSONString();
-        return this;
-    }
-
-    /**
-     * @return
-     */
-    synchronized TemplateContentModelImpl retractScope() {
-        if (currentContext != rootContext) {
-            Context oldContext = currentContext;
-            currentContext = currentContext.parent();
-            oldContext.destroy();
-        }
-        invalidateJSONString();
-        return this;
-    }
-
-    TemplateContentModelImpl isolateToCurrentScope(final Map<String, Object> isolatedModelData) {
-        currentScopeData().merge(wrap(isolatedModelData));
-        invalidateJSONString();
-        return this;
-    }
-
-    private synchronized TemplateContentModelImpl set(final Context context, final String path, final Object value) {
-        List<String> keys = parsePath(path);
-        StringBuilder builtPath = new StringBuilder();
-        Map<String, Object> modelDataObj = scopeDataFor(context);
-        List<String> ancestors = ancestors(keys);
-        for (int i = 0; i < ancestors.size(); i++) {
-            String key = ancestors.get(i);
-            if (i > 0) builtPath.append(".");
-            builtPath.append(key);
-            Object valueObj = get(builtPath.toString());
-            if (valueObj == null) { // Create the value at key.
-                valueObj = new JSONObject();
-                modelDataObj.put(key, valueObj);
-            } else
-            if (valueObj instanceof Map) {
-                // Perfect... leave it then...
-            } else {
-                valueObj = new JSONObject();
-                modelDataObj.put(key, valueObj); // Replace the value at key.
-            }
-            modelDataObj = (Map<String, Object>) valueObj;
-        }
-
-        modelDataObj.put(targetKey(keys), isValid(value) ? value : POJOBackedMap.toMap(value));
-        invalidateJSONString();
-        return this;
-    }
-
-    private boolean isValid(final Object o) {
-        return (o instanceof String || o instanceof Number || o instanceof Date || o instanceof Calendar ||
-                o instanceof Collection || o instanceof Map || o instanceof Boolean);
     }
 
     public enum ScopeLocality {
@@ -217,19 +127,6 @@ public class TemplateContentModelImpl
         return set(name, value, ScopeLocality.ROOT);
     }
 
-    private List<String> parsePath(final String path) {
-        StringTokenizer tokenizer = new StringTokenizer(path, "./");
-        int len = tokenizer.countTokens();
-        if (len == 1) {
-            return Arrays.asList(path);
-        }
-        List<String> keys = new ArrayList<>(len);
-        while (tokenizer.hasMoreTokens()) {
-            keys.add(tokenizer.nextToken());
-        }
-        return keys;
-    }
-
     /**
      * Set Attribute name to value. Attributes are not included in static representations of the ContentModel.
      * For example, a JSON representation provided to clients. They are also not included in any list of model keys or
@@ -263,14 +160,6 @@ public class TemplateContentModelImpl
         return currentContext.data(name);
     }
 
-    private String targetKey(final List<String> pathParts) {
-        return pathParts.get(pathParts.size() - 1);
-    }
-
-    private List<String> ancestors(final List<String> pathParts) {
-        return (pathParts.size() > 1) ? pathParts.subList(0, pathParts.size() - 1) : Collections.EMPTY_LIST;
-    }
-
     @Override
     public String getAsString(final String name) {
         Object value = get(name);
@@ -297,24 +186,10 @@ public class TemplateContentModelImpl
     public <T> boolean is(String name, Class<T> type) {
         return (has(name) && type != null && type.isAssignableFrom(get(name).getClass()));
     }
-
-    Context handlebarsContext() {
-        return currentContext;
-    }
-
+    
     public HttpServletRequest request()
             throws Exception {
         return (has(HTTP_REQUEST)) ? getAs(HTTP_REQUEST, HttpServletRequest.class) : null;
-    }
-
-    final HttpServletResponse response()
-            throws Exception {
-        return response;
-    }
-
-    final HttpServletResponse wrappedResponse()
-            throws Exception {
-        return new CharResponseWrapper(response());
     }
 
     public JSONObject toJSONObject(String... keys) {
@@ -339,12 +214,6 @@ public class TemplateContentModelImpl
         }
     }
 
-    private void invalidateJSONString() {
-        cachedJSONString = null;
-    }
-
-    private volatile String cachedJSONString = null;
-
     public String toJSONString() {
         if (cachedJSONString == null) {
             cachedJSONString = toJSONObject().toJSONString();
@@ -356,6 +225,136 @@ public class TemplateContentModelImpl
     @Override
     public String toString() {
         return toJSONString();
+    }
+
+    protected final TemplateContentModelImpl newInstance(final HttpServletRequest request, final HttpServletResponse response) {
+        return new TemplateContentModelImpl(request, response);
+    }
+
+    Context rootContext() {
+        return rootContext;
+    }
+
+    JSONObject currentScopeData() {
+        return scopeDataFor(currentContext);
+    }
+
+    JSONObject scopeDataFor(Context context) {
+        return (JSONObject) context.model();
+    }
+
+    /**
+     * @return
+     */
+    synchronized TemplateContentModelImpl extendScope(final Map<String, Object> isolatedModelData) {
+        return extendScope().isolateToCurrentScope(wrap(isolatedModelData));
+    }
+
+    /**
+     * @return
+     */
+    synchronized TemplateContentModelImpl extendScope() {
+        currentContext = newChildContext();
+        invalidateJSONString();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    synchronized TemplateContentModelImpl isolateScope() {
+        currentContext = newChildContext(); // TODO: Flatten Model Hierarchy
+        invalidateJSONString();
+        return this;
+    }
+
+    /**
+     * @return
+     */
+    synchronized TemplateContentModelImpl retractScope() {
+        if (currentContext != rootContext) {
+            Context oldContext = currentContext;
+            currentContext = currentContext.parent();
+            oldContext.destroy();
+        }
+        invalidateJSONString();
+        return this;
+    }
+
+    final HttpServletResponse response()
+            throws Exception {
+        return response;
+    }
+
+    final HttpServletResponse wrappedResponse()
+            throws Exception {
+        return new CharResponseWrapper(response());
+    }
+
+    Context handlebarsContext() {
+        return currentContext;
+    }
+
+    private synchronized TemplateContentModelImpl set(final Context context, final String path, final Object value) {
+        List<String> keys = parsePath(path);
+        StringBuilder builtPath = new StringBuilder();
+        Map<String, Object> modelDataObj = scopeDataFor(context);
+        List<String> ancestors = ancestors(keys);
+        for (int i = 0; i < ancestors.size(); i++) {
+            String key = ancestors.get(i);
+            if (i > 0) builtPath.append(".");
+            builtPath.append(key);
+            Object valueObj = get(builtPath.toString());
+            if (valueObj == null) { // Create the value at key.
+                valueObj = new JSONObject();
+                modelDataObj.put(key, valueObj);
+            } else
+            if (valueObj instanceof Map) {
+                // Perfect... leave it then...
+            } else {
+                valueObj = new JSONObject();
+                modelDataObj.put(key, valueObj); // Replace the value at key.
+            }
+            modelDataObj = (Map<String, Object>) valueObj;
+        }
+
+        modelDataObj.put(targetKey(keys), isValid(value) ? value : POJOBackedMap.toMap(value));
+        invalidateJSONString();
+        return this;
+    }
+
+    private boolean isValid(final Object o) {
+        return (o instanceof String || o instanceof Number || o instanceof Date || o instanceof Calendar ||
+                o instanceof Collection || o instanceof Map || o instanceof Boolean);
+    }
+
+    private Context newChildContext() {
+        return Context.newBuilder(currentContext, new JSONObject()).build();
+    }
+
+    private List<String> parsePath(final String path) {
+        StringTokenizer tokenizer = new StringTokenizer(path, "./");
+        int len = tokenizer.countTokens();
+        if (len == 1) {
+            return Arrays.asList(path);
+        }
+        List<String> keys = new ArrayList<>(len);
+        while (tokenizer.hasMoreTokens()) {
+            keys.add(tokenizer.nextToken());
+        }
+        return keys;
+    }
+
+    private String targetKey(final List<String> pathParts) {
+        return pathParts.get(pathParts.size() - 1);
+    }
+
+    private List<String> ancestors(final List<String> pathParts) {
+        return (pathParts.size() > 1) ? pathParts.subList(0, pathParts.size() - 1) : Collections.EMPTY_LIST;
+    }
+
+    private void invalidateJSONString() {
+        cachedJSONString = null;
     }
 
     static final class CharResponseWrapper
@@ -376,5 +375,4 @@ public class TemplateContentModelImpl
             return new PrintWriter(output);
         }
     }
-
 }

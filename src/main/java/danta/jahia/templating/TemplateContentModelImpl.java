@@ -126,10 +126,8 @@ public class TemplateContentModelImpl
      * are not scoped, and will persist even if all Scopes (up to the root, of course) have been destroyed.
      * <p/>
      *
-     * @param name
-     *         The name of the Attribute
-     * @param value
-     *         The value of the Attribute
+     * @param name The name of the Attribute
+     * @param value The value of the Attribute
      *
      * @return This instances of the TemplateContentModel to allow chaining
      */
@@ -251,16 +249,19 @@ public class TemplateContentModelImpl
         StringBuilder builtPath = new StringBuilder();
         Map<String, Object> modelDataObj = scopeDataFor(context);
         List<String> ancestors = ancestors(keys);
+
         for (int i = 0; i < ancestors.size(); i++) {
             String key = ancestors.get(i);
             if (i > 0) builtPath.append(".");
             builtPath.append(key);
             Object valueObj = get(builtPath.toString());
+
             if (valueObj == null) { // Create the value at key.
                 valueObj = new JSONObject();
                 modelDataObj.put(key, valueObj);
-            } else
-            if (valueObj instanceof Map) {
+
+            } else if (valueObj instanceof Map) {
+
                 // Perfect... leave it then...
             } else {
                 valueObj = new JSONObject();
@@ -271,6 +272,7 @@ public class TemplateContentModelImpl
 
         modelDataObj.put(targetKey(keys), isValid(value) ? value : POJOBackedMap.toMap(value));
         invalidateJSONString();
+
         return this;
     }
 
@@ -289,10 +291,12 @@ public class TemplateContentModelImpl
         if (len == 1) {
             return Arrays.asList(path);
         }
+
         List<String> keys = new ArrayList<>(len);
         while (tokenizer.hasMoreTokens()) {
             keys.add(tokenizer.nextToken());
         }
+
         return keys;
     }
 
@@ -307,5 +311,4 @@ public class TemplateContentModelImpl
     private void invalidateJSONString() {
         cachedJSONString = null;
     }
-
 }

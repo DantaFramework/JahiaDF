@@ -122,15 +122,20 @@
                         <Export-Package>
                             danta.jahia.contextprocessors.*,
                             danta.jahia.services,
-                            danta.jahia,
-                            com.github.jknack.handlebars.*,
-                            com.github.jknack.*
+                            danta.jahia
                         </Export-Package>
-                        <Import-Package>danta.core.util, danta.core.execution, javax.servlet.http,net.minidev.json;version=2.3.0, org.slf4j; version="[1.6, 2)"; resolution:=optional,
+                        <Import-Package>
+                            danta.core.util,
+                            danta.core.execution,
+                            danta.core.templating,
+                            javax.servlet.http,
+                            net.minidev.json;version=2.3.0,
+                            org.slf4j; version="[1.6, 2)"; resolution:=optional,
                             *,${jahia.plugin.projectPackageImport}
                         </Import-Package>
-                        <Embed-Dependency>antlr4-runtime,org.mozilla.javascript,
-                            jsoup,commons-lang3,guava,handlebars</Embed-Dependency>
+                        <Embed-Dependency>
+                            commons-lang3,jsoup,guava
+                        </Embed-Dependency>
                         <Bundle-Activator>danta.jahia.DantaJahiaActivator</Bundle-Activator>
                     </instructions>
                 </configuration>

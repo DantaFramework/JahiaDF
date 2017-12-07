@@ -104,7 +104,7 @@ public class AddAllResourceContentPropertiesContextProcessor
             contentModel.set(RESOURCE_CONTENT_KEY, content);
 
         } catch (Exception e) {
-            LOG.error("LAYERX Exception: "+e.getMessage(),e);
+            LOG.error("DANTA Exception: "+e.getMessage(),e);
             throw new ProcessException(e);
         }
     }

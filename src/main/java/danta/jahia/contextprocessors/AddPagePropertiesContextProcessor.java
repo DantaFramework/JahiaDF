@@ -136,12 +136,12 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                         Session jcrSession = resource.getNode().getSession();
 
                         // TODO Move this to a configuration PATH so every site can decide where to find it
-                        String dantaConfigurationNode = sitePath + LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH;
+                        String dantaConfigurationNode = sitePath + DANTA_CONFIGURATION_DEFAULT_SUFFIX_PATH;
                         if (jcrSession.nodeExists(dantaConfigurationNode)) {
                             Node dantaNode = jcrSession.getNode(dantaConfigurationNode);
-                            if (dantaNode != null && dantaNode.hasNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME)) {
+                            if (dantaNode != null && dantaNode.hasNode(DANTA_CONFIGURATION_PAGE_NODE_NAME)) {
 
-                                Node pagesPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_PAGE_NODE_NAME);
+                                Node pagesPropertiesNode = dantaNode.getNode(DANTA_CONFIGURATION_PAGE_NODE_NAME);
                                 Node pageProperties = this.getPagePropertiesNode(pagesPropertiesNode, mainNode.getPath() );
                                 if (pageProperties != null){
                                     Map<String, Object> propsMapPage = propsToMap(
@@ -167,7 +167,7 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
 
             }
         } catch (Exception e) {
-            LOG.error("LAYERX Exception: "+e.getMessage(),e);
+            LOG.error("DANTA Exception: "+e.getMessage(),e);
             throw new ProcessException(e);
         }
 
@@ -180,8 +180,8 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
             NodeIterator iterator = pagesPropertyNode.getNodes();
             while (iterator.hasNext()) {
                 Node n = iterator.nextNode();
-                if (n != null && n.hasProperty(LAYERX_CONFIGURATION_PAGE_PATH_PROPERTY)) {
-                    Property property = n.getProperty(LAYERX_CONFIGURATION_PAGE_PATH_PROPERTY);
+                if (n != null && n.hasProperty(DANTA_CONFIGURATION_PAGE_PATH_PROPERTY)) {
+                    Property property = n.getProperty(DANTA_CONFIGURATION_PAGE_PATH_PROPERTY);
                     String path = property.getString();
                     if (path.equals(pagePathToFind)) {
                         pageProperties = n;

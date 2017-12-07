@@ -78,12 +78,12 @@ public class AddGlobalPropertiesContextProcessor  extends AbstractCheckComponent
                 JCRSessionWrapper jcrSession = resource.getNode().getSession();
 
                 // TODO Move this to a configuration PATH so every site can decide where to find it
-                String dantaConfigurationNode = sitePath + LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH;
+                String dantaConfigurationNode = sitePath + DANTA_CONFIGURATION_DEFAULT_SUFFIX_PATH;
                 if (jcrSession.nodeExists(dantaConfigurationNode)) {
                     JCRNodeWrapper dantaNode = jcrSession.getNode(dantaConfigurationNode);
-                    if (dantaNode != null && dantaNode.hasNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME)) {
+                    if (dantaNode != null && dantaNode.hasNode(DANTA_CONFIGURATION_GLOBAL_NODE_NAME)) {
 
-                        JCRNodeWrapper globalPropertiesNode = dantaNode.getNode(LAYERX_CONFIGURATION_GLOBAL_NODE_NAME);
+                        JCRNodeWrapper globalPropertiesNode = dantaNode.getNode(DANTA_CONFIGURATION_GLOBAL_NODE_NAME);
                         Map globalContext = processNode(globalPropertiesNode, renderContext, resource);
                         contentModel.set(GLOBAL_PROPERTIES_KEY , globalContext);
 

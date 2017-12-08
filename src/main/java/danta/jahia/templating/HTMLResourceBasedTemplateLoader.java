@@ -74,7 +74,7 @@ public class HTMLResourceBasedTemplateLoader implements TemplateLoader {
 	InputStream is = JahiaUtils.getInputStream(bundle, pathToLook);
 
     if (is == null){
-        LOG.error("LAYERX | Not able to load Partial: --> "+ pathToLook);
+        LOG.error("DANTA | Not able to load Partial: --> "+ pathToLook);
     }
 
 	return new HTMLFileTemplateSource(resource, is);

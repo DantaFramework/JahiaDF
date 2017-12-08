@@ -45,7 +45,7 @@ public class Constants {
     public static final String NODE_COLON_SEPARATOR = ":";
     public static final String NODE_COLON_TO_FILE_SEPARATOR = "_";
 
-    public static final String LOG_PRE = "LAYERX -> ";
+    public static final String LOG_PRE = "DANTA -> ";
 
     public static final String HTTP_REQUEST = "general_http_request";
 
@@ -74,12 +74,12 @@ public class Constants {
     public static final String LX_EXT = danta.Constants.DOT + LX;
 
     // Danta Configuration Global Properties and Page Properties
-    public static final String LAYERX_CONFIGURATION_GLOBAL_NODE_NAME = "global";
-    public static final String LAYERX_CONFIGURATION_PAGE_NODE_NAME = "pages";
-    public static final String LAYERX_CONFIGURATION_PAGE_PATH_PROPERTY = "dantaPagePath";
-    public static final String LAYERX_CONFIGURATION_SITE_SUFFIX_PATH = "contents";
-    public static final String LAYERX_CONFIGURATION_NODE_NAME = "danta";
-    public static final String LAYERX_CONFIGURATION_DEFAULT_SUFFIX_PATH = SLASH + LAYERX_CONFIGURATION_SITE_SUFFIX_PATH + SLASH + LAYERX_CONFIGURATION_NODE_NAME;
+    public static final String DANTA_CONFIGURATION_GLOBAL_NODE_NAME = "global";
+    public static final String DANTA_CONFIGURATION_PAGE_NODE_NAME = "pages";
+    public static final String DANTA_CONFIGURATION_PAGE_PATH_PROPERTY = "dantaPagePath";
+    public static final String DANTA_CONFIGURATION_SITE_SUFFIX_PATH = "contents";
+    public static final String DANTA_CONFIGURATION_NODE_NAME = "danta";
+    public static final String DANTA_CONFIGURATION_DEFAULT_SUFFIX_PATH = SLASH + DANTA_CONFIGURATION_SITE_SUFFIX_PATH + SLASH + DANTA_CONFIGURATION_NODE_NAME;
 
     // JAHIA BINDINGS KEY
     public static final String JAHIA_BINDING_CURRENT_RESOURCE = "currentResource";

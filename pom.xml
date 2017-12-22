@@ -228,9 +228,9 @@
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>Danta</groupId>
+            <groupId>io.tikaltechnologies.danta</groupId>
             <artifactId>Core</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <!-- HANDLEBARS BEGIN -->
         <dependency>

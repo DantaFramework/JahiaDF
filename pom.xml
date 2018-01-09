@@ -223,13 +223,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>Danta</groupId>
-            <artifactId>API</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <groupId>io.tikaltechnologies.danta</groupId>
+            <artifactId>api</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.tikaltechnologies.danta</groupId>
-            <artifactId>Core</artifactId>
+            <artifactId>core</artifactId>
             <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <!-- HANDLEBARS BEGIN -->

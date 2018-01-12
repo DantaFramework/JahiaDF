@@ -34,14 +34,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jcr.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static danta.Constants.*;
 import static danta.core.util.ObjectUtils.wrap;
 import static danta.jahia.Constants.*;
 import static danta.jahia.util.PropertyUtils.propsToMap;
+import static danta.jahia.util.PropertyUtils.getVanityURLs;
 
 import static danta.jahia.Constants.RESERVED_SYSTEM_NAME_PREFIXES;
 
@@ -118,6 +117,12 @@ public class AddPagePropertiesContextProcessor extends AbstractCheckComponentCat
                         pageContent.put(IS_LIVE_MODE, renderContext.isLiveMode());
                         pageContent.put(IS_AJAX_REQUEST, renderContext.isAjaxRequest());
                         pageContent.put(JAHIA_WORKSPACE, renderContext.getWorkspace());
+
+                        // Adding vanity path (jnt:vanityUrls)
+                        Object vanityURLs = getVanityURLs(mainNode);
+                        if (vanityURLs != null) {
+                            pageContent.put(VANITY_PATH, vanityURLs);
+                        }
 
                         // Set Danta configuration for page resources only as it is obtained via the template
                         // associated to the view of the page (set by the script engine)

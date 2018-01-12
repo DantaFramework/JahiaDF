@@ -91,6 +91,7 @@ public class Constants {
     public static final String JAHIA_JNT_CONTENT_TEMPLATE = "jnt:contentTemplate";
     public static final String JAHIA_JNT_CONTENT_LIST = "jnt:contentList";
     public static final String JAHIA_JNT_PAGE = "jnt:page";
+    public static final String JAHIA_VANITY_URL_MAPPING = "vanityUrlMapping";
 
     public static final String[] LIST_TEMPLATE_OPTION_TYPES = new String[]{
             JAHIA_JNT_TEMPLATE,

@@ -37,6 +37,7 @@ import static danta.jahia.Constants.JAHIA_RESOURCE;
 import static danta.jahia.Constants.JCR_DESCRIPTION;
 import static danta.jahia.Constants.JCR_CREATED;
 import static danta.jahia.Constants.JCR_TITLE;
+import static danta.jahia.util.PropertyUtils.getVanityURLs;
 
 /**
  * The abstraction for extracting page properties
@@ -63,10 +64,15 @@ public abstract class AbstractPageDetailsContextProcessor extends
             pageDetails.put(CREATED, ResourceUtils.getProperty(page, JCR_CREATED, ""));
             pageDetails.put(PAGE_TITLE,ResourceUtils.getProperty(page, JCR_TITLE, ""));
 
+            // Adding vanity path (jnt:vanityUrls)
+            Object vanityURLs = getVanityURLs(page);
+            if (vanityURLs != null) {
+                pageDetails.put(VANITY_PATH, vanityURLs);
+            }
+
             // This properties are not yet supported by Jahia UI for page properties
             pageDetails.put(SUBTITLE, ResourceUtils.getProperty(page, "", ""));
             pageDetails.put(NAVIGATION_TITLE, ResourceUtils.getProperty(page, "", ""));
-            pageDetails.put(VANITY_PATH, ResourceUtils.getProperty(page, "", ""));
 
             if (currentPage.equals(page.getPath())) {
                 pageDetails.put(IS_CURRENT_PAGE, true);

@@ -29,14 +29,12 @@ import org.apache.commons.lang3.StringUtils;
 import javax.jcr.*;
 import java.util.*;
 
-import org.jahia.bin.Render;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static danta.Constants.VANITY_PATH;
 import static danta.jahia.Constants.JAHIA_VANITY_URL_MAPPING;
 import static danta.jahia.Constants.RESERVED_SYSTEM_NAME_PREFIXES;
 
@@ -442,7 +440,7 @@ public class PropertyUtils {
         List vanityPaths = new ArrayList();
         JCRNodeWrapper vanityUrls = mainNode.getNode(JAHIA_VANITY_URL_MAPPING);
         if(vanityUrls != null) {
-            for (javax.jcr.Node vanityUrl : vanityUrls.getNodes()) {
+            for (Node vanityUrl : vanityUrls.getNodes()) {
                 vanityPaths.add(vanityUrl.getName());
             }
         }

@@ -37,7 +37,7 @@ import static danta.jahia.Constants.JAHIA_RESOURCE;
 import static danta.jahia.Constants.JCR_DESCRIPTION;
 import static danta.jahia.Constants.JCR_CREATED;
 import static danta.jahia.Constants.JCR_TITLE;
-import static danta.jahia.util.PropertyUtils.getVanityURLs;
+import static danta.jahia.util.PageUtils.getVanityURLs;
 
 /**
  * The abstraction for extracting page properties

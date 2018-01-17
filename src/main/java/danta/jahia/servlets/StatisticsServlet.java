@@ -24,16 +24,13 @@ import danta.api.TemplateContentModel;
 import danta.api.configuration.ConfigurationProvider;
 import danta.core.execution.ExecutionContextImpl;
 import danta.jahia.services.ContentModelFactoryService;
-import danta.jahia.util.JahiaUtils;
 import net.minidev.json.JSONArray;
-import org.apache.commons.lang3.StringUtils;
 import org.jahia.bin.Action;
 import org.jahia.bin.ActionResult;
 import org.jahia.services.content.JCRSessionWrapper;
 import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
 import org.jahia.services.render.URLResolver;
-import org.jahia.services.render.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +48,7 @@ import static danta.jahia.Constants.*;
  *
  * @author      jarriola
  * @version     1.0.0
- * @since       2017-06-29
+ * @since       2018-01-18
  */
 public class StatisticsServlet extends Action {
 

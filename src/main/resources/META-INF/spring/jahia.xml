@@ -19,4 +19,11 @@
         <property name="configurationProvider" ref="configurationProviderReference" />
     </bean>
 
+    <bean id="statistics" class="danta.jahia.servlets.StatisticsServlet">
+        <property name="name" value="contentmodel.statistics" />
+        <property name="contextProcessorEngine" ref="contextProcessorEngineService" />
+        <property name="contentModelFactoryService" ref="contentModelFactoryServiceServiceReference" />
+        <property name="configurationProvider" ref="configurationProviderReference" />
+    </bean>
+
 </blueprint>

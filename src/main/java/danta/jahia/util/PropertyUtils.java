@@ -428,32 +428,4 @@ public class PropertyUtils {
 
         return null;
     }
-
-    /**
-     * Returns the vanity URLs mapping stored under a page node in the JCR.
-     *
-     * @param mainNode The page node parameter
-     * @return vanityPaths The vanityURLs either as a single object or as an array list.
-     * @throws RepositoryException
-     */
-    public static Object getVanityURLs(JCRNodeWrapper mainNode) throws RepositoryException {
-        List vanityPaths = new ArrayList();
-        JCRNodeWrapper vanityUrls = mainNode.getNode(JAHIA_VANITY_URL_MAPPING);
-        if(vanityUrls != null) {
-            for (Node vanityUrl : vanityUrls.getNodes()) {
-                vanityPaths.add(vanityUrl.getName());
-            }
-        }
-        if(vanityPaths.size() > 0 ) {
-            if (vanityPaths.size() == 1) {
-
-                return vanityPaths.get(0);
-            } else {
-
-                return vanityPaths;
-            }
-        }
-
-        return null;
-    }
 }

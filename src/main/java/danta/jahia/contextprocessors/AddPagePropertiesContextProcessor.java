@@ -40,7 +40,7 @@ import static danta.Constants.*;
 import static danta.core.util.ObjectUtils.wrap;
 import static danta.jahia.Constants.*;
 import static danta.jahia.util.PropertyUtils.propsToMap;
-import static danta.jahia.util.PropertyUtils.getVanityURLs;
+import static danta.jahia.util.PageUtils.getVanityURLs;
 
 import static danta.jahia.Constants.RESERVED_SYSTEM_NAME_PREFIXES;
 

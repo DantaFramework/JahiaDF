@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static danta.jahia.Constants.JAHIA_VANITY_URL_MAPPING;
+import static danta.jahia.Constants.JAHIA_J_URL;
 
 /**
  * Page Utility class, contained generic methods for handling a JahiaDF Page.
@@ -41,25 +42,28 @@ public class PageUtils {
      *
      * @param mainNode The page node
      * @return vanityPaths The vanityURLs either as a string or list.
-     * @throws RepositoryException
      */
-    public static Object getVanityURLs(JCRNodeWrapper mainNode) throws RepositoryException {
+    public static Object getVanityURLs(JCRNodeWrapper mainNode) {
         List vanityPaths = new ArrayList();
-        JCRNodeWrapper vanityUrls = mainNode.getNode(JAHIA_VANITY_URL_MAPPING);
-        if(vanityUrls != null) {
-            for (Node vanityUrl : vanityUrls.getNodes()) {
-                vanityPaths.add(vanityUrl.getName());
-            }
-        }
-        if(vanityPaths.size() > 0 ) {
-            if (vanityPaths.size() == 1) {
+        try {
+            JCRNodeWrapper vanityUrls = mainNode.getNode(JAHIA_VANITY_URL_MAPPING);
 
-                return vanityPaths.get(0);
-            } else {
-
-                return vanityPaths;
+            if(vanityUrls != null) {
+                for (Node vanityUrl : vanityUrls.getNodes()) {
+                    vanityPaths.add(vanityUrl.getProperty(JAHIA_J_URL).getString());
+                }
             }
-        }
+            if(vanityPaths.size() > 0 ) {
+                if (vanityPaths.size() == 1) {
+
+                    return vanityPaths.get(0);
+                } else {
+
+                    return vanityPaths;
+                }
+            }
+        // Node might not exist or the structure in the JCR for storing vanity URLs might have changed in a newer version
+        } catch(RepositoryException e) { }
 
         return null;
     }

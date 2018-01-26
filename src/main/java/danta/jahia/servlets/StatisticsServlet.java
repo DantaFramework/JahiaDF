@@ -24,13 +24,13 @@ import danta.api.TemplateContentModel;
 import danta.api.configuration.ConfigurationProvider;
 import danta.core.execution.ExecutionContextImpl;
 import danta.jahia.services.ContentModelFactoryService;
+import danta.jahia.util.JahiaUtils;
 import net.minidev.json.JSONArray;
+import org.apache.commons.lang3.StringUtils;
 import org.jahia.bin.Action;
 import org.jahia.bin.ActionResult;
 import org.jahia.services.content.JCRSessionWrapper;
-import org.jahia.services.render.RenderContext;
-import org.jahia.services.render.Resource;
-import org.jahia.services.render.URLResolver;
+import org.jahia.services.render.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +93,25 @@ public class StatisticsServlet extends Action {
         final HttpServletResponse response = renderContext.getResponse();
 
         try {
-            TemplateContentModel contentModel = (TemplateContentModel) contentModelFactoryService.getContentModel(
+            View view = null;
+            TemplateContentModel contentModel;
+            boolean checkInTemplateNode = false;
+
+            // Resource is a page
+            if ( resource.getNode() != null && resource.getNode().getPrimaryNodeType() != null &&
+                    StringUtils.startsWithAny(resource.getNode().getPrimaryNodeType().getName(),
+                            LIST_TEMPLATE_OPTION_TYPES) ){
+                view = JahiaUtils.resolveTemplateResourceView(request, resource, renderContext);
+                // Set view in the request since the view is needed by the contentModelFactoryService
+                request.setAttribute(JAHIA_SCRIPT_VIEW, view);
+
+                // Reassign the current resource to the template's resource
+                resource = JahiaUtils.resolveTemplateResource(resource, renderContext);
+
+                checkInTemplateNode = true;
+            }
+
+            contentModel = (TemplateContentModel) contentModelFactoryService.getContentModel(
                     request, response, renderContext, resource);
 
             ExecutionContextImpl executionContext = new ExecutionContextImpl();
@@ -101,6 +119,10 @@ public class StatisticsServlet extends Action {
             executionContext.put(JAHIA_RESOURCE, resource);
             executionContext.put(JAHIA_RENDER_CONTEXT, renderContext);
             executionContext.put(ENGINE_RESOURCE, resource);
+            if (checkInTemplateNode){
+                executionContext.put(JAHIA_SCRIPT_VIEW, view);
+                executionContext.put(ENGINE_RESOURCE, view);
+            }
 
             List<String> currentProcessorChain = contextProcessorEngine.execute(executionContext, contentModel);
 
@@ -118,5 +140,4 @@ public class StatisticsServlet extends Action {
 
         return ActionResult.OK;
     }
-
 }

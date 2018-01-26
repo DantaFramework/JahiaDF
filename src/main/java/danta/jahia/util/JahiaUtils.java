@@ -415,7 +415,7 @@ public class JahiaUtils {
     }
 
     /**
-     * Resolve Template Resource by View
+     * Resolve a template's resource view
      * @param request This is a HttpServletRequest
      * @param resource This is a resource to resolve for template
      * @param renderContext This is a RenderContext
@@ -430,13 +430,7 @@ public class JahiaUtils {
             view = script.getView();
         } else {
             RenderService service = RenderService.getInstance();
-            Resource pageResource = new Resource(resource.getNode(), HTML, null, Resource.CONFIGURATION_PAGE);
-            Template template = service.resolveTemplate(pageResource, renderContext);
-            pageResource.setTemplate(template.getView());
-
-            JCRNodeWrapper templateNode = pageResource.getNode().getSession().getNodeByIdentifier(template.node);
-            Resource wrapperResource = new Resource(templateNode, pageResource.getTemplateType(), template.view,
-                    Resource.CONFIGURATION_WRAPPER);
+            Resource wrapperResource = resolveTemplateResource(resource, renderContext);
             script = service.resolveScript(wrapperResource, renderContext);
             if (script != null){
                 view = script.getView();
@@ -444,5 +438,26 @@ public class JahiaUtils {
         }
 
         return view;
+    }
+
+    /**
+     * Resolve a template's resource
+     * @param resource This is a resource to resolve for template
+     * @param renderContext This is a RenderContext
+     * @return wrapperResource
+     * @throws RepositoryException
+     */
+    public static Resource resolveTemplateResource(Resource resource, RenderContext renderContext)
+            throws RepositoryException {
+        RenderService service = RenderService.getInstance();
+        Resource pageResource = new Resource(resource.getNode(), HTML, null, Resource.CONFIGURATION_PAGE);
+        Template template = service.resolveTemplate(pageResource, renderContext);
+        pageResource.setTemplate(template.getView());
+
+        JCRNodeWrapper templateNode = pageResource.getNode().getSession().getNodeByIdentifier(template.node);
+        Resource wrapperResource = new Resource(templateNode, pageResource.getTemplateType(), template.view,
+                Resource.CONFIGURATION_WRAPPER);
+
+        return wrapperResource;
     }
 }

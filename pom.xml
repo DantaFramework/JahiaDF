@@ -27,8 +27,8 @@
         <version>7.2.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>Danta</groupId>
-    <artifactId>JahiaDF</artifactId>
+    <groupId>io.tikaltechnologies.danta</groupId>
+    <artifactId>jahia-df</artifactId>
     <name>Danta JahiaDF</name>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
@@ -36,8 +36,8 @@
     <description>This is the custom module (Danta - JahiaDF) for running on a Digital Experience Manager server.</description>
 
     <scm>
-        <connection>scm:git:git@github.com:danta/JahiaDF.git</connection>
-        <developerConnection>scm:git:git@github.com:danta/JahiaDF.git</developerConnection>
+        <connection>scm:git:git://github.com/DantaFramework/JahiaDF.git</connection>
+        <developerConnection>scm:git:ssh://github.com/DantaFramework/JahiaDF.git</developerConnection>
     </scm>
     <properties>
         <!-- Nexus properties -->
